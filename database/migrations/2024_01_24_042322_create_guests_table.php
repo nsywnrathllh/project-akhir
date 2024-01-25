@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,7 +17,9 @@ return new class extends Migration
             $table->enum('destination', ['TU', 'Walikelas', 'Guru', 'Bendahara', 'Kurikulum', 'Kesiswaan', 'Kepala Sekolah', 'Meeting', 'Lainnya']);
             $table->string('purpose');
             $table->time('checkin');
-            $table->time('checkout');
+            $table->time('checkout')->nullable();
+            $table->mediumText('image')->nullable();
+            $table->enum('status', ['Check Out', 'Still Inside'])->default('Still Inside');
             $table->timestamps();
         });
     }
