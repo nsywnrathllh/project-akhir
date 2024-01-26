@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('guest_id')->constrained('guests')->cascadeOnDelete();
             $table->enum('type', ['motor', 'car', 'bus']);
             $table->string('license_plate');
             $table->timestamps();

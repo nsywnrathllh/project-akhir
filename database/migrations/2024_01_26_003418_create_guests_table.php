@@ -12,8 +12,9 @@ return new class extends Migration {
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('vehicles_id')->constrained('vehicles')->cascadeOnDelete();
             $table->string('name');
-            $table->integer('phone');
+            $table->bigInteger('phone');
             $table->enum('destination', ['TU', 'Walikelas', 'Guru', 'Bendahara', 'Kurikulum', 'Kesiswaan', 'Kepala Sekolah', 'Meeting', 'Lainnya']);
             $table->string('purpose');
             $table->time('checkin');
