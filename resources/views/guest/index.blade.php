@@ -1,29 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.template-mazer')
+@section('content')
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
+<link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
+<div class="page-heading">
+    <h3>Data Guest</h3>
+</div>
+    <div class="page-content">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    {{-- <title>{{$title->name}} | Results</title> --}}
-</head>
-
-<body>
-    <div class="container">
+        @if ($message = session('success'))
+                    <div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
+                        {{ $message }}
+                    </div>
+        @endif
         <div class="card">
-            <div class="card-body" style="background-color: #F5F7F8;">
-                <h1 class="text-center fs-2 mt-4">DATA GUESTS</h1>
+            <div class="card-body">
+                <a href="{{route('guest.create')}}" class="btn btn-success mb-3"><i class="bi bi-plus"></i>&nbsp; Add</a>
 
-                <div class="mb-3">
-                    <a href="{{ route('guest.create') }}" class="btn btn-primary">Tambah</a>
-                </div>
-
-                <table class="table">
+                <table class="table responsive" id="table1">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -50,12 +44,16 @@
                                 <td>{{ $item->checkout }}</td>
                                 <td>{{ $item->image }}</td>
                                 <td>{{ $item->status }}</td>
-                                <td>
+                                <td class="d-flex">
+                                    <a href="{{ route('guest.edit', $item->id) }}" class="btn btn-warning btn-sm mr-1"><i class="bi bi-pencil-square"></i>&nbsp;
+                                        Edit
+                                    </a>
                                     <form action="{{ route('guest.destroy', $item->id) }}" method="POST">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" class="btn btn-dark m-1"
-                                            onclick="return confirm('Are you sure you want to delete this data?')">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger sm-1" onclick="return confirm('Are you sure you want to delete this data?')"><i class="bi bi-trash"></i>&nbsp;
+                                            Delete
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
@@ -69,6 +67,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
-</body>
-
-</html>
+@endsection

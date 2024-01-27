@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('guest', [GuestController::class, 'index'])->name('guest.index');
+Route::get('guests', [GuestController::class, 'index'])->name('guest.index');
 Route::get('guests/create', [GuestController::class, 'create'])->name('guest.create');
 Route::post('guests', [GuestController::class, 'store'])->name('guest.store');
 Route::get('guests/{guest}', [GuestController::class, 'edit'])->name('guest.edit');
 Route::put('guests/{guest}', [GuestController::class, 'update'])->name('guest.update');
 Route::delete('guests/{guest}', [GuestController::class, 'destroy'])->name('guest.destroy');
+
+Route::resource('vehicles', VehicleController::class);
