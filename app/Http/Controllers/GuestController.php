@@ -2,70 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Guest\GuestStoreRequest;
+use App\Http\Requests\Guest\GuestUpdateRequest;
 use App\Models\Guest;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
     public function index()
     {
-        $guests = Guest::all();
-
-        return view('guest.index', compact('guests'));
+        $guest = Guest::with('vehicles')->get();
+        return view('guest.index', compact('guest'));
     }
 
     public function create()
     {
-        return view('guest.create');
+        $vehicles = Vehicle::all(); // Gantilah dengan model kendaraan yang sesuai
+        return view('guest.create', compact('vehicles'));
     }
 
-    public function store(Request $request)
+    public function store(GuestStoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'destination' => 'required',
-            'purpose' => 'required',
-            'checkin' => 'required',
-            'checkout' => 'nullable',
-            'image' => 'nullable',
-            'status' => 'required',
-        ]);
+        // $vehiclesId = $request->input('vehicles_id');
+        Guest::create($request->validated());
 
-        Guest::create($request->all());
-
-        return redirect()->route('guest.index')->with('success', 'Guest created successfully');
+        return redirect()->route('guests.index')->with('success', 'Guest created successfully');
     }
 
-    public function edit($id)
+    public function edit(Guest $guest)
     {
-        $guest = Guest::findOrFail($id);
-        return view('guest.edit', compact('guests'));
+        $vehicles = Vehicle::all(); // Gantilah dengan model kendaraan yang sesuai
+        return view('guest.edit', compact('guest', 'vehicles'));
     }
 
-    public function update(Request $request, Guest $guest)
+    public function update(GuestUpdateRequest $request, Guest $guest)
     {
-        $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'destination' => 'required',
-            'purpose' => 'required',
-            'checkin' => 'required',
-            'checkout' => 'nullable',
-            'image' => 'nullable',
-            'status' => 'required',
-        ]);
-
-        $guest->update($request->all());
-
-        return redirect()->route('guest.index')->with('success', "$guest->name has been updated");
+        $guest->update($request->validated());
+        return redirect()->route('guests.index')->with('success', 'Guest updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Guest $guest)
     {
-        $guest = Guest::find($id);
+        // $guest = Guest::find($id);
         $guest->delete();
-
-        return redirect()->route('guest.index')->with('success', "$guest->name has been deleted");
+        return redirect()->route('guests.index')->with('success', 'Guest deleted successfully.');
     }
 }
