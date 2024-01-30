@@ -11,7 +11,7 @@ class GuestStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class GuestStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'phone' => 'required|numeric',
+            'destination' => 'required|in:TU,Walikelas,Guru,Bendahara,Kurikulum,Kesiswaan,Kepala Sekolah,Meeting,Lainnya',
+            'purpose' => 'required',
+            'checkin' => 'required',
+            'checkout' => 'nullable',
+            'image' => 'nullable',
+            'status' => 'required|in:Check Out,Still Inside',
+            'vehicles_id' => 'nullable|numeric',
         ];
     }
 }
