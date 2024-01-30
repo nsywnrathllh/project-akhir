@@ -23,7 +23,8 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo" height="100" width="130">
-                            <a href="#"><img src="{{ asset('mazer/assets/compiled/svg/logo.svg')}}" alt="Logo" srcset=""></a>
+                            <a href="#"><img src="{{ asset('mazer/assets/compiled/svg/logo.svg') }}"
+                                    alt="Logo" srcset=""></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -79,15 +80,15 @@
                             </a>
                         </li> --}}
 
-                        <li class="sidebar-item {{(request()->is('guests*')) ? 'active' : ''}}">
-                            <a href="{{route('guest.index')}}" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->is('guests*') ? 'active' : '' }}">
+                            <a href="{{ route('guests.index') }}" class='sidebar-link'>
                                 <i class="bi bi-people"></i>
                                 <span>Guest</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item {{(request()->is('vehicles*')) ? 'active' : ''}}">
-                            <a href="{{route('vehicles.index')}}" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->is('vehicles*') ? 'active' : '' }}">
+                            <a href="{{ route('vehicles.index') }}" class='sidebar-link'>
                                 <i class="bi bi-car-front-fill"></i>
                                 <span>Vehicle</span>
                             </a>
@@ -103,43 +104,46 @@
                         <i class="bi bi-justify fs-3"></i>
                     </a>
                 </header>
-                    <nav class="navbar navbar-expand navbar-light navbar-top">
-                        <div class="container-fluid">
+                <nav class="navbar navbar-expand navbar-light navbar-top">
+                    <div class="container-fluid">
 
 
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin: 80%">
-                                <div class="dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <div class="user-menu d-flex">
-                                            <div class="user-name text-end me-3">
-                                                <h6 class="mb-0 text-gray-600">John Ducky</h6>
-                                                <p class="mb-0 text-sm text-gray-600">Administrator</p>
-                                            </div>
-                                            <div class="user-img d-flex align-items-center">
-                                                <div class="avatar avatar-md">
-                                                    <img src="{{ asset('mazer/assets/compiled/jpg/1.jpg')}}">
-                                                </div>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin: 80%">
+                            <div class="dropdown">
+                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="user-menu d-flex">
+                                        <div class="user-name text-end me-3">
+                                            <h6 class="mb-0 text-gray-600">John Ducky</h6>
+                                            <p class="mb-0 text-sm text-gray-600">Administrator</p>
+                                        </div>
+                                        <div class="user-img d-flex align-items-center">
+                                            <div class="avatar avatar-md">
+                                                <img src="{{ asset('mazer/assets/compiled/jpg/1.jpg') }}">
                                             </div>
                                         </div>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 11rem;">
-                                        <li>
-                                            <h6 class="dropdown-header">Hello, John!</h6>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
-                                                Profile</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
-                                                Settings</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li><a class="dropdown-item" href="#"><i
-                                                    class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
-                                    </ul>
-                                </div>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"
+                                    style="min-width: 11rem;">
+                                    <li>
+                                        <h6 class="dropdown-header">Hello, John!</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i
+                                                class="icon-mid bi bi-person me-2"></i> My
+                                            Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i
+                                                class="icon-mid bi bi-gear me-2"></i>
+                                            Settings</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i
+                                                class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </nav>
+                    </div>
+                </nav>
             </div>
             @yield('content')
 
