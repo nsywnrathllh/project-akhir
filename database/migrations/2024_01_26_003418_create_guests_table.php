@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('purpose');
             $table->string('checkin');
             $table->string('checkout')->nullable();
-            $table->mediumText('image')->nullable();
+            $table->mediumText('image_path')->nullable();
             $table->enum('status', ['Check Out', 'Still Inside'])->default('Still Inside');
             $table->timestamps();
         });
@@ -30,6 +30,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('guests');
+        if (Schema::hasTable('guests')) {
+            Schema::table('guests', function (Blueprint $table) {
+                $table->dropColumn('image_path');
+            });
+        }
     }
 };

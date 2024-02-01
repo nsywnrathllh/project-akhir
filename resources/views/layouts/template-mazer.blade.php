@@ -93,6 +93,13 @@
                                 <span>Vehicle</span>
                             </a>
                         </li>
+
+                        <li class="sidebar-item {{ request()->is('logs*') ? 'active' : '' }}">
+                            <a href="{{ route('guests.index') }}" class='sidebar-link'>
+                                <i class="bi bi-clock"></i>
+                                <span>Log</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
