@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
     <div class="page-heading">
-        <h3>Data Guest</h3>
+        <h3>Data Logs</h3>
     </div>
     <div class="page-content">
 
@@ -43,14 +43,7 @@
                                 <td>{{ $item->purpose }}</td>
                                 <td>{{ $item->checkin }}</td>
                                 <td>{{ $item->checkout }}</td>
-                                <td>
-                                    @if ($item->image_path)
-                                        <img src="{{ asset($item->image_path) }}"
-                                            style="max-width: 100px; max-height: 100px;" alt="Guest Image">
-                                    @else
-                                        No Image
-                                    @endif
-                                </td>
+                                <td>{{ $item->image }}</td>
                                 <td>{{ $item->status }}</td>
                                 <td class="d-flex">
                                     <a href="{{ route('guests.edit', $item->id) }}" class="btn btn-warning btn-sm mr-1"><i

@@ -17,9 +17,9 @@ return new class extends Migration {
             $table->bigInteger('phone');
             $table->enum('destination', ['TU', 'Walikelas', 'Guru', 'Bendahara', 'Kurikulum', 'Kesiswaan', 'Kepala Sekolah', 'Meeting', 'Lainnya']);
             $table->string('purpose');
-            $table->time('checkin');
-            $table->time('checkout')->nullable();
-            $table->mediumText('image')->nullable();
+            $table->string('checkin');
+            $table->string('checkout')->nullable();
+            $table->mediumText('image_path')->nullable();
             $table->enum('status', ['Check Out', 'Still Inside'])->default('Still Inside');
             $table->timestamps();
         });
@@ -30,6 +30,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('guests');
+        if (Schema::hasTable('guests')) {
+            Schema::table('guests', function (Blueprint $table) {
+                $table->dropColumn('image_path');
+            });
+        }
     }
 };

@@ -1,113 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
-
-<body>
-    <div class="container mt-5">
+@extends('layouts.template-mazer')
+@section('content')
+    <div class="page-heading">
+        <h3>Update Data Guest</h3>
+    </div>
+    <div class="page-content">
         <div class="card">
-            <h1 class="text-center fs-2 mt-4">EDIT GUESTS</h1>
-            <div class="card-body">
-
-                <form action="{{ route('guest.update', $guests->id) }}" method="POST" enctype="multipart/form-data">
+            <div class="card-body col-12 col-md-8">
+                <form action="{{ route('guests.update', $guest) }}" method="POST">
+                    @method('PUT')
                     @csrf
-                    @method('put')
+                    <input type="hidden" name="image_data" id="imageData" value="">
                     <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input value="{{ $guests->name }}" name="name" type="text"
-                            class="form-control @error('name') is-invalid @enderror">
-                        @error('name')
+                        <!-- Bagian untuk kamera -->
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Ambil Foto</h3>
+                                    <video id="cameraFeed" width="100%" height="auto" autoplay></video>
+                                    <button onclick="capturePhoto()" class="btn btn-primary mt-3"> Simpan</button>
+                                    <canvas id="canvas" style="display: none;"></canvas>
+                                    <img id="capturedImage" src="#" alt="Captured Image" style="max-width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Form untuk edit data hasil -->
+                        <label class="form-label">Vehicle</label>
+                        <select name="vehicles_id" class="form-control @error('vehicles_id') is-invalid @enderror">
+                            @foreach ($vehicles as $vehicle)
+                                <option value="{{ $vehicle->id }}"
+                                    {{ old('vehicles_id', $guest->vehicles_id) == $vehicle->id ? 'selected' : '' }}>
+                                    {{ $vehicle->type }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('vehicles_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Phone</label>
-                        <input value="{{ $guests->phone }}" name="phone" type="text"
-                            class="form-control @error('phone') is-invalid @enderror">
-                        @error('phone')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
+                    <x-text-input name="name" label="Name" required :value="$guest->name" />
+                    <x-text-input name="phone" label="Phone" required :value="$guest->phone" />
                     <div class="mb-3">
                         <label class="form-label">Destination</label>
                         <select name="destination" class="form-control @error('destination') is-invalid @enderror">
-                            <option value="TU" {{ $guests->destination == 'TU' ? 'selected' : '' }}>TU</option>
-                            <option value="Walikelas" {{ $guests->destination == 'Walikelas' ? 'selected' : '' }}>
-                                Walikelas</option>
-                            <!-- ... (sisa opsi) ... -->
+                            <option value="TU" {{ old('destination') == 'TU' ? 'selected' : '' }}>TU
+                            </option>
+                            <option value="Walikelas" {{ old('destination') == 'Walikelas' ? 'selected' : '' }}>Walikelas
+                            </option>
+                            <option value="Guru" {{ old('destination') == 'Guru' ? 'selected' : '' }}>Guru
+                            </option>
+                            <option value="Bendahara" {{ old('destination') == 'Bendahara' ? 'selected' : '' }}>Bendahara
+                            </option>
+                            <option value="Kurikulum" {{ old('destination') == 'Kurikulum' ? 'selected' : '' }}>Kurikulum
+                            </option>
+                            <option value="Kesiswaan" {{ old('destination') == 'Kesiswaan' ? 'selected' : '' }}>
+                                Kesiswaan</option>
+                            <option value="Kepala Sekolah" {{ old('destination') == 'Kepala Sekolah' ? 'selected' : '' }}>
+                                Kepala Sekolah
+                            </option>
+                            <option value="Meeting" {{ old('destination') == 'Meeting' ? 'selected' : '' }}>Meeting
+                            </option>
+                            <option value="Lainnya" {{ old('destination') == 'Lainnya' ? 'selected' : '' }}>Lainnya
+                            </option>
                         </select>
                         @error('destination')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Purpose</label>
-                        <input value="{{ $guests->purpose }}" name="purpose" type="text"
-                            class="form-control @error('purpose') is-invalid @enderror">
-                        @error('purpose')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Checkin</label>
-                        <input value="{{ $guests->checkin }}" name="checkin" type="text"
-                            class="form-control @error('checkin') is-invalid @enderror">
-                        @error('checkin')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Checkout</label>
-                        <input value="{{ $guests->checkout }}" name="checkout" type="text"
-                            class="form-control @error('checkout') is-invalid @enderror">
-                        @error('checkout')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Image</label>
-                        <input value="{{ $guests->image }}" name="image" type="text"
-                            class="form-control @error('image') is-invalid @enderror">
-                        @error('image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
+                    <x-text-input name="purpose" label="Purpose" required :value="$guest->purpose" />
+                    <x-text-input type="time" name="checkin" label="Check In" required :value="$guest->checkin" />
+                    <x-text-input type="time" name="checkout" label="Check Out" :value="$guest->checkout" />
+                    {{-- <x-text-input name="image" label="Image" :value="$guest->image" /> --}}
                     <div class="mb-3">
                         <label class="form-label">Status</label>
                         <select name="status" class="form-control @error('status') is-invalid @enderror">
-                            <option value="Check Out" {{ $guests->status == 'Check Out' ? 'selected' : '' }}>Check Out
-                            </option>
-                            <option value="Still Inside" {{ $guests->status == 'Still Inside' ? 'selected' : '' }}>
-                                Still
-                                Inside
+                            <option value="Check Out" {{ old('status', $guest->status) == 'Check Out' ? 'selected' : '' }}>
+                                Check Out</option>
+                            <option value="Still Inside"
+                                {{ old('status', $guest->status) == 'Still Inside' ? 'selected' : '' }}>Still Inside
                             </option>
                         </select>
                         @error('status')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <button type="submit" class="btn btn-dark">Update</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        async function setupCamera() {
+            const constraints = {
+                video: {
+                    width: 400,
+                    height: 300
+                }
+            };
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+            const video = document.getElementById('cameraFeed');
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = stream;
+            } catch (err) {
+                console.error('Error accessing the camera:', err);
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('cameraFeed');
+            const canvas = document.getElementById('canvas');
+            const photo = document.getElementById('capturedImage');
+            const imageDataInput = document.getElementById('imageData');
+
+            canvas.width = 400;
+            canvas.height = 300;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/png');
+            photo.setAttribute('src', imageData);
+            photo.style.display = 'block';
+
+            // Set data gambar ke input hidden
+            imageDataInput.value = imageData;
+        }
+
+        setupCamera();
     </script>
-</body>
-
-</html>
+@endsection

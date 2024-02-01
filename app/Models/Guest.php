@@ -9,22 +9,10 @@ class Guest extends Model
 {
     use HasFactory;
 
-    protected $table = 'guests';
-
-    protected $fillable = [
-        'name',
-        'phone',
-        'destination',
-        'purpose',
-        'checkin',
-        'checkout',
-        'image',
-        'status',
-    ];
-
+    protected $guarded = [];
 
     public function vehicles()
     {
-        return $this->hasMany(Vehicle::class);
+        return $this->belongsTo(Vehicle::class);
     }
 }
