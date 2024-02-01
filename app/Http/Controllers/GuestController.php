@@ -30,6 +30,22 @@ class GuestController extends Controller
         return redirect()->route('guests.index')->with('success', 'Guest created successfully');
     }
 
+    private function saveImage($imageData)
+    {
+        $folderPath = 'images/guests/';
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0777, true);
+        }
+
+        $image = str_replace('data:image/png;base64,', '', $imageData);
+        $image = str_replace(' ', '+', $image);
+        $imageName = 'guest_' . time() . '.png';
+        $filePath = $folderPath . $imageName;
+        file_put_contents($filePath, base64_decode($image));
+
+        return $filePath;
+    }
+
     public function edit(Guest $guest)
     {
         $vehicles = Vehicle::all(); // Gantilah dengan model kendaraan yang sesuai
@@ -40,6 +56,22 @@ class GuestController extends Controller
     {
         $guest->update($request->validated());
         return redirect()->route('guests.index')->with('success', 'Guest updated successfully.');
+    }
+
+    private function save($imageData)
+    {
+        $folderPath = 'images/guests/';
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0777, true);
+        }
+
+        $image = str_replace('data:image/png;base64,', '', $imageData);
+        $image = str_replace(' ', '+', $image);
+        $imageName = 'guest_' . time() . '.png';
+        $filePath = $folderPath . $imageName;
+        file_put_contents($filePath, base64_decode($image));
+
+        return $filePath;
     }
 
     public function destroy(Guest $guest)

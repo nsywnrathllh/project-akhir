@@ -28,7 +28,7 @@ class GuestStoreRequest extends FormRequest
             'purpose' => 'required',
             'checkin' => 'required',
             'checkout' => 'nullable',
-            'image' => 'nullable',
+            'image_path' => 'nullable',
             'status' => 'required|in:Check Out,Still Inside',
             'vehicles_id' => 'nullable|numeric',
         ];

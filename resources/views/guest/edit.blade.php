@@ -9,7 +9,21 @@
                 <form action="{{ route('guests.update', $guest) }}" method="POST">
                     @method('PUT')
                     @csrf
+                    <input type="hidden" name="image_data" id="imageData" value="">
                     <div class="mb-3">
+                        <!-- Bagian untuk kamera -->
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Ambil Foto</h3>
+                                    <video id="cameraFeed" width="100%" height="auto" autoplay></video>
+                                    <button onclick="capturePhoto()" class="btn btn-primary mt-3"> Simpan</button>
+                                    <canvas id="canvas" style="display: none;"></canvas>
+                                    <img id="capturedImage" src="#" alt="Captured Image" style="max-width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Form untuk edit data hasil -->
                         <label class="form-label">Vehicle</label>
                         <select name="vehicles_id" class="form-control @error('vehicles_id') is-invalid @enderror">
                             @foreach ($vehicles as $vehicle)
@@ -55,7 +69,7 @@
                     <x-text-input name="purpose" label="Purpose" required :value="$guest->purpose" />
                     <x-text-input type="time" name="checkin" label="Check In" required :value="$guest->checkin" />
                     <x-text-input type="time" name="checkout" label="Check Out" :value="$guest->checkout" />
-                    <x-text-input name="image" label="Image" :value="$guest->image" />
+                    {{-- <x-text-input name="image" label="Image" :value="$guest->image" /> --}}
                     <div class="mb-3">
                         <label class="form-label">Status</label>
                         <select name="status" class="form-control @error('status') is-invalid @enderror">
@@ -74,4 +88,42 @@
             </div>
         </div>
     </div>
+    <script>
+        async function setupCamera() {
+            const constraints = {
+                video: {
+                    width: 400,
+                    height: 300
+                }
+            };
+
+            const video = document.getElementById('cameraFeed');
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = stream;
+            } catch (err) {
+                console.error('Error accessing the camera:', err);
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('cameraFeed');
+            const canvas = document.getElementById('canvas');
+            const photo = document.getElementById('capturedImage');
+            const imageDataInput = document.getElementById('imageData');
+
+            canvas.width = 400;
+            canvas.height = 300;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/png');
+            photo.setAttribute('src', imageData);
+            photo.style.display = 'block';
+
+            // Set data gambar ke input hidden
+            imageDataInput.value = imageData;
+        }
+
+        setupCamera();
+    </script>
 @endsection
