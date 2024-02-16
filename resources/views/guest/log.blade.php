@@ -40,7 +40,14 @@
                                 <td>{{ $guest->purpose }}</td>
                                 <td>{{ $guest->checkin }}</td>
                                 <td>{{ $guest->checkout }}</td>
-                                <td>{{ $guest->image }}</td>
+                                <td>
+                                    @if ($guest->image_path)
+                                        <img src="{{ asset($guest->image_path) }}"
+                                            style="max-width: 100px; max-height: 100px;" alt="Guest Image">
+                                    @else
+                                        No Image
+                                    @endif
+                                </td>
                                 <td>{{ $guest->status }}</td>
                             </tr>
                         @endforeach
