@@ -62,7 +62,7 @@ class GuestController extends Controller
 
         if ($request->has('image_data')) {
             $imagePath = $this->saveImage($request->input('image_data'));
-            $guest->update(['image' => $imagePath]);
+            $guest->update(['image_path' => $imagePath]);
         }
 
         return redirect()->route('guests.index')->with('success', 'Guest updated successfully.');
