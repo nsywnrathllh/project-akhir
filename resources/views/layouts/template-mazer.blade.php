@@ -94,7 +94,7 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item {{ request()->is('logs*') ? 'active' : '' }}">
+                        <li class="sidebar-item {{ request()->is('guest.log*') ? 'active' : '' }}">
                             <a href="{{ route('guest.log') }}" class='sidebar-link'>
                                 <i class="bi bi-clock"></i>
                                 <span>Log</span>
