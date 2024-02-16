@@ -77,7 +77,7 @@
                     @enderror
                 </div>
 
-                <input type="hidden" name="image_data" id="imageData" value="">
+                <input type="hidden" name="image_path" id="imageData" value="">
                 <button onclick="capturePhotoAndSave(); showCapturedImage();" class="btn btn-primary mt-3"> Ambil Foto dan
                     Simpan</button>
             </form>
