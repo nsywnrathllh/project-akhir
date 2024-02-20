@@ -11,19 +11,6 @@
                     @csrf
                     <input type="hidden" name="image_data" id="imageData" value="">
                     <div class="mb-3">
-                        <!-- Bagian untuk kamera -->
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="card-title">Ambil Foto</h3>
-                                    <video id="cameraFeed" width="100%" height="auto" autoplay></video>
-                                    <button onclick="capturePhoto()" class="btn btn-primary mt-3"> Simpan</button>
-                                    <canvas id="canvas" style="display: none;"></canvas>
-                                    <img id="capturedImage" src="#" alt="Captured Image" style="max-width: 100%;">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Form untuk edit data hasil -->
                         <label class="form-label">Vehicle</label>
                         <select name="vehicles_id" class="form-control @error('vehicles_id') is-invalid @enderror">
                             @foreach ($vehicles as $vehicle)
@@ -69,7 +56,6 @@
                     <x-text-input name="purpose" label="Purpose" required :value="$guest->purpose" />
                     <x-text-input type="time" name="checkin" label="Check In" required :value="$guest->checkin" />
                     <x-text-input type="time" name="checkout" label="Check Out" :value="$guest->checkout" />
-                    {{-- <x-text-input name="image" label="Image" :value="$guest->image" /> --}}
                     <div class="mb-3">
                         <label class="form-label">Status</label>
                         <select name="status" class="form-control @error('status') is-invalid @enderror">
@@ -83,10 +69,19 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <div class="md-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Ambil Foto</h3>
+                            <video id="cameraFeed" width="100%" height="auto" autoplay></video>
+                            <canvas id="canvas" style="display: none;"></canvas>
+                            <img id="capturedImage" src="#" alt="" style="max-width: 100%;">
+                            <button onclick="capturePhoto()" class="btn btn-primary mt-1"> Simpan</button>
                 </form>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
     </div>
     <script>
         async function setupCamera() {

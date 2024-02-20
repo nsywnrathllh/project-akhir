@@ -9,17 +9,6 @@
                 @csrf
                 <input type="hidden" name="image_data" id="imageData" value="">
                 @method('post')
-                <div class="mb-3">
-                    <div class="card-body">
-                        <h3 class="card-title">Ambil Foto</h3>
-                        <div>
-                            <video id="cameraFeed" width="100%" height="auto" autoplay></video>
-                            <canvas id="canvas" style="display: none;"></canvas>
-                            <img id="capturedImage" src="#" alt="Captured Image">
-                        </div>
-                    </div>
-                </div>
-
                 <label class="form-label">Vehicle</label>
                 <select name="vehicles_id" class="form-control @error('vehicles_id') is-invalid @enderror">
                     @foreach ($vehicles as $vehicle)
@@ -75,6 +64,16 @@
                     @error('status')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                </div>
+                <div class="mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Ambil Foto</h3>
+                        <div>
+                            <video id="cameraFeed" width="100%" height="auto" autoplay></video>
+                            <canvas id="canvas" style="display: none;"></canvas>
+                            <img id="capturedImage" src="#" alt="">
+                        </div>
+                    </div>
                 </div>
 
                 <input type="hidden" name="image_path" id="imageData" value="">
