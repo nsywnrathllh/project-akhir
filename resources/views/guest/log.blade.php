@@ -14,8 +14,6 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <a href="{{ route('guests.create') }}" class="btn btn-success mb-3"><i class="bi bi-plus"></i>&nbsp; Add</a>
-
                 <table class="table responsive" id="table1">
                     <thead>
                         <tr>
@@ -29,37 +27,28 @@
                             <th scope="col">CheckOut</th>
                             <th scope="col">Image</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($guest as $key => $item)
+                        @foreach ($guests as $key => $guest)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->vehicles->type }}</td>
-                                <td>{{ $item->phone }}</td>
-                                <td>{{ $item->destination }}</td>
-                                <td>{{ $item->purpose }}</td>
-                                <td>{{ $item->checkin }}</td>
-                                <td>{{ $item->checkout }}</td>
-                                <td>{{ $item->image }}</td>
-                                <td>{{ $item->status }}</td>
-                                <td class="d-flex">
-                                    <a href="{{ route('guests.edit', $item->id) }}" class="btn btn-warning btn-sm mr-1"><i
-                                            class="bi bi-pencil-square"></i>&nbsp;
-                                        Edit
-                                    </a>
-                                    <form method="POST" action="{{ route('guests.destroy', $item->id) }}" class="ms-2">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger sm-1"
-                                            onclick="return confirm('Are you sure you want to delete this data?')"><i
-                                                class="bi bi-trash"></i>&nbsp;
-                                            Delete
-                                        </button>
-                                    </form>
+                                <td>{{ $guest->name }}</td>
+                                <td>{{ $guest->vehicles->type }}</td>
+                                <td>{{ $guest->phone }}</td>
+                                <td>{{ $guest->destination }}</td>
+                                <td>{{ $guest->purpose }}</td>
+                                <td>{{ $guest->checkin }}</td>
+                                <td>{{ $guest->checkout }}</td>
+                                <td>
+                                    @if ($guest->image_path)
+                                        <img src="{{ asset($guest->image_path) }}"
+                                            style="max-width: 100px; max-height: 100px;" alt="Guest Image">
+                                    @else
+                                        No Image
+                                    @endif
                                 </td>
+                                <td>{{ $guest->status }}</td>
                             </tr>
                         @endforeach
                     </tbody>

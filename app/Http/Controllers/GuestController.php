@@ -25,7 +25,13 @@ class GuestController extends Controller
 
     public function store(GuestStoreRequest $request)
     {
-        Guest::create($request->validated());
+
+        $guest = Guest::create($request->validated());
+
+        if ($request->has('image_data')) {
+            $imagePath = $this->saveImage($request->input('image_data'));
+            $guest->update(['image_path' => $imagePath]);
+        }
 
         return redirect()->route('guests.index')->with('success', 'Guest created successfully');
     }
@@ -55,6 +61,12 @@ class GuestController extends Controller
     public function update(GuestUpdateRequest $request, Guest $guest)
     {
         $guest->update($request->validated());
+
+        if ($request->has('image_data')) {
+            $imagePath = $this->saveImage($request->input('image_data'));
+            $guest->update(['image_path' => $imagePath]);
+        }
+
         return redirect()->route('guests.index')->with('success', 'Guest updated successfully.');
     }
 

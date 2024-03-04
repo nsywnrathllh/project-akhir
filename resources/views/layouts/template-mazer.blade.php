@@ -80,13 +80,6 @@
                             </a>
                         </li> --}}
 
-                        <li class="sidebar-item {{ request()->is('guests*') ? 'active' : '' }}">
-                            <a href="{{ route('guests.index') }}" class='sidebar-link'>
-                                <i class="bi bi-people"></i>
-                                <span>Guest</span>
-                            </a>
-                        </li>
-
                         <li class="sidebar-item {{ request()->is('vehicles*') ? 'active' : '' }}">
                             <a href="{{ route('vehicles.index') }}" class='sidebar-link'>
                                 <i class="bi bi-car-front-fill"></i>
@@ -94,8 +87,15 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item {{ request()->is('logs*') ? 'active' : '' }}">
+                        <li class="sidebar-item {{ request()->is('guests*') ? 'active' : '' }}">
                             <a href="{{ route('guests.index') }}" class='sidebar-link'>
+                                <i class="bi bi-people"></i>
+                                <span>Guest</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item {{ request()->is('guest.log*') ? 'active' : '' }}">
+                            <a href="{{ route('guest.log') }}" class='sidebar-link'>
                                 <i class="bi bi-clock"></i>
                                 <span>Log</span>
                             </a>
