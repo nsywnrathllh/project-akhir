@@ -12,8 +12,9 @@ class GuestController extends Controller
 {
     public function index()
     {
-        $guest = Guest::with('vehicles')->get();
-        return view('guest.index', compact('guest'));
+        $guest = Guest::all();
+        $vehicle = Vehicle::all();
+        return view('guest.index', compact('guest', 'vehicle'));
     }
 
     public function create()
@@ -24,7 +25,6 @@ class GuestController extends Controller
 
     public function store(GuestStoreRequest $request)
     {
-        // $vehiclesId = $request->input('vehicles_id');
         Guest::create($request->validated());
 
         return redirect()->route('guests.index')->with('success', 'Guest created successfully');
