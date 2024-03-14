@@ -26,11 +26,11 @@ class GuestStoreRequest extends FormRequest
             'phone' => 'required|numeric',
             'destination' => 'required|in:TU,Walikelas,Guru,Bendahara,Kurikulum,Kesiswaan,Kepala Sekolah,Meeting,Lainnya',
             'purpose' => 'required',
+            'has_vehicle' => 'required|in:Yes,No',
             'checkin' => 'required',
             'checkout' => 'nullable',
             'image_path' => 'nullable',
             'status' => 'required|in:Check Out,Still Inside',
-            'vehicles_id' => 'nullable|numeric',
         ];
     }
 }

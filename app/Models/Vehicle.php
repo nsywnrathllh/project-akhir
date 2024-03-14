@@ -12,7 +12,7 @@ class Vehicle extends Model
     protected $guarded = [];
 
 
-    public function guests()
+    public function guest()
     {
         return $this->belongsTo(Guest::class);
     }
