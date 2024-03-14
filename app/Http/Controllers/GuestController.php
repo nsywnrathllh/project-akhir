@@ -7,32 +7,49 @@ use App\Http\Requests\Guest\GuestUpdateRequest;
 use App\Models\Guest;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GuestController extends Controller
 {
     public function index()
     {
-        $guest = Guest::with('vehicles')->get();
-        return view('guest.index', compact('guest'));
+        $guest = Guest::all();
+        $vehicle = Vehicle::all();
+        return view('guest.index', compact('guest', 'vehicle'));
     }
 
     public function create()
     {
-        $vehicles = Vehicle::all(); // Gantilah dengan model kendaraan yang sesuai
-        return view('guest.create', compact('vehicles'));
+        $vehicle = Vehicle::all();
+        return view('guest.create', compact('vehicle'));
     }
 
     public function store(GuestStoreRequest $request)
     {
-        $guest = Guest::create($request->validated());
+        DB::transaction(function () use ($request) {
+            $guest = new Guest($request->validated());
 
-        if ($request->has('image_data')) {
-            $imagePath = $this->saveImage($request->input('image_data'));
-            $guest->update(['image_path' => $imagePath]);
-        }
+            if ($request->has('image_data')) {
+                $imagePath = $this->saveImage($request->input('image_data'));
+                $guest->image_path = $imagePath;
+            }
 
-        return redirect()->route('guests.index')->with('success', 'Guest created successfully');
+            $guest->save();
+
+            if ($request->has('has_vehicle') && $request->input('has_vehicle') == 'Yes') {
+                $vehicle = new Vehicle([
+                    'type' => $request->input('type'),
+                    'license_plate' => $request->input('license_plate'),
+                ]);
+
+                // Simpan kendaraan dan hubungkan dengan tamu yang sesuai
+                $guest->vehicles()->save($vehicle);
+            }
+        });
+
+        return redirect()->route('guests.create')->with('success', 'Guest created successfully');
     }
+
 
     private function saveImage($imageData)
     {

@@ -21,8 +21,6 @@ Route::get('/', function () {
 });
 
 Route::resource('guests', GuestController::class);
+Route::get('logs', [GuestController::class, 'index'])->name('logs');
 Route::resource('vehicles', VehicleController::class);
-Route::get('/guest/log', function () {
-    $guests = Guest::all();
-    return view('guest.log', compact('guests'));
-})->name('guest.log');
+

@@ -13,6 +13,6 @@ class Guest extends Model
 
     public function vehicles()
     {
-        return $this->belongsTo(Vehicle::class);
+        return $this->hasMany(Vehicle::class);
     }
 }

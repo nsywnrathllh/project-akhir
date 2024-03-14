@@ -5,21 +5,10 @@
     </div>
     <div class="card">
         <div class="card-body col-12 col-md-8">
-            <form action="{{ route('guests.store') }}" method="POST">
+            <form action="{{ route('guests.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="image_data" id="imageData" value="">
                 @method('post')
-                <label class="form-label">Vehicle</label>
-                <select name="vehicles_id" class="form-control @error('vehicles_id') is-invalid @enderror">
-                    @foreach ($vehicles as $vehicle)
-                        <option value="{{ $vehicle->id }}" {{ old('vehicles_id') == $vehicle->id ? 'selected' : '' }}>
-                            {{ $vehicle->type }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('vehicles_id')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
 
                 <x-text-input name="name" label="Name" required />
                 <x-text-input name="phone" label="Phone Number" required />
@@ -50,6 +39,28 @@
                 </div>
 
                 <x-text-input name="purpose" label="Purpose" required />
+
+                <div class="form-group">
+                    <label for="has_vehicle">Opsi Kendaraan</label>
+                    <select class="form-control" id="has_vehicle" name="has_vehicle" required>
+                        <option value="Yes">Bawa</option>
+                        <option value="No" selected>Tidak</option>
+                    </select>
+                    @error('has_vehicle')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                
+                <div class="form-group" id="vehicle_fields" style="display: none;">
+                    <label for="type">Tipe</label>
+                    <input type="text" class="form-control" id="type" name="type">
+                </div>
+                
+                <div class="form-group" id="license_plate_fields" style="display: none;">
+                    <label for="license_plate">Plat Nomor</label>
+                    <input type="text" class="form-control" id="license_plate" name="license_plate">
+                </div>
+                
                 <x-text-input type="time" name="checkin" label="Check In" required />
                 <x-text-input type="time" name="checkout" label="Check Out" />
 
@@ -126,5 +137,30 @@
         }
 
         setupCamera();
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var hasVehicleSelect = document.getElementById('has_vehicle');
+            var vehicleFields = document.getElementById('vehicle_fields');
+            var licensePlateFields = document.getElementById('license_plate_fields');
+
+            // Tampilkan atau sembunyikan input tergantung pada opsi kendaraan yang dipilih
+            hasVehicleSelect.addEventListener('change', function() {
+                if (hasVehicleSelect.value === 'Yes') {
+                    vehicleFields.style.display = 'block';
+                    licensePlateFields.style.display = 'block';
+                } else {
+                    vehicleFields.style.display = 'none';
+                    licensePlateFields.style.display = 'none';
+                }
+            });
+
+            // Inisialisasi tampilan input sesuai dengan nilai opsi kendaraan saat ini
+            if (hasVehicleSelect.value === 'Yes') {
+                vehicleFields.style.display = 'block';
+                licensePlateFields.style.display = 'block';
+            }
+        });
     </script>
 @endsection
