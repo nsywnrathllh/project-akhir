@@ -13,23 +13,24 @@ class VehicleSeeder extends Seeder
      */
     public function run(): void
     {
-        $vehicles = [
-            [
-                'type' => 'motorcycle',
-                'license_plate' => 'F123JHV',
-            ],
-            [
-                'type' => 'car',
-                'license_plate' => 'F865JHFB',
-            ],
-            [
-                'type' => 'bus',
-                'license_plate' => 'F3183JH',
-            ],
-        ];
+        //     $vehicles = [
+        //         [
+        //             'type' => 'motorcycle',
+        //             'license_plate' => 'F123JHV',
+        //         ],
+        //         [
+        //             'type' => 'car',
+        //             'license_plate' => 'F865JHFB',
+        //         ],
+        //         [
+        //             'type' => 'bus',
+        //             'license_plate' => 'F3183JH',
+        //         ],
+        //     ];
 
-        foreach ($vehicles as $key => $value) {
-            Vehicle::create($value);
-        }
+        //     foreach ($vehicles as $key => $value) {
+        //         Vehicle::create($value);
+        //     }
+        // }
     }
 }

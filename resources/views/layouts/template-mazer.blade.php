@@ -100,6 +100,13 @@
                                 <span>Log</span>
                             </a>
                         </li>
+
+                        <li class="sidebar-item {{ request()->is('setting.index*') ? 'active' : '' }}">
+                            <a href="{{ route('setting.index') }}" class='sidebar-link'>
+                                <i class="bi bi-gear"></i>
+                                <span>Setting</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
