@@ -23,7 +23,7 @@ class GuestStoreRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'phone' => 'required|numeric',
+            'phone' => 'required|string',
             'destination' => 'required|in:TU,Walikelas,Guru,Bendahara,Kurikulum,Kesiswaan,Kepala Sekolah,Meeting,Lainnya',
             'purpose' => 'required',
             'has_vehicle' => 'required|in:Yes,No',
