@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('phone');
+            $table->string('alliance');
             $table->enum('destination', ['TU', 'Walikelas', 'Guru', 'Bendahara', 'Kurikulum', 'Kesiswaan', 'Kepala Sekolah', 'Meeting', 'Lainnya']);
             $table->text('purpose');
             $table->enum('has_vehicle', ['Yes', 'No']);

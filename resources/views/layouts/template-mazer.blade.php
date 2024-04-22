@@ -101,8 +101,8 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item {{ request()->is('setting.index*') ? 'active' : '' }}">
-                            <a href="{{ route('setting.index') }}" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->is('settings*') ? 'active' : '' }}">
+                            <a href="{{ route('settings.index') }}" class='sidebar-link'>
                                 <i class="bi bi-gear"></i>
                                 <span>Setting</span>
                             </a>

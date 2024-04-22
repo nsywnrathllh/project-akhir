@@ -1,5 +1,6 @@
 @extends('layouts.template-mazer')
 @section('content')
+@notifyCss
     <div class="page-heading">
         <h3>Add Data Guest</h3>
     </div>
@@ -12,6 +13,7 @@
 
                 <x-text-input name="name" label="Name" required />
                 <x-text-input name="phone" label="Phone Number" required />
+                <x-text-input name="alliance" label="Alliance" required />
 
                 <div class="mb-3">
                     <label class="form-label">Destination</label>
@@ -61,8 +63,8 @@
                     <input type="text" class="form-control" id="license_plate" name="license_plate">
                 </div>
                 
-                <x-text-input type="time" name="checkin" label="Check In" required />
-                <x-text-input type="time" name="checkout" label="Check Out" />
+                <x-text-input type="datetime-local" name="checkin" label="Check In" required />
+                <x-text-input type="datetime-local" name="checkout" label="Check Out" />
 
                 <div class="mb-3">
                     <label class="form-label">Status</label>
@@ -94,6 +96,8 @@
         </div>
     </div>
 
+    <x-notify::notify />
+    @notifyJs
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
