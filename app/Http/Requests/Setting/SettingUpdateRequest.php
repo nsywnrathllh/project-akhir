@@ -25,6 +25,9 @@ class SettingUpdateRequest extends FormRequest
             'name' => 'required',
             'address' => 'required',
             'logo' => 'required',
+            'wa_endpoint' => 'nullable',
+            'wa_api_key' => 'nullable',
+            'wa_sender' => 'nullable',
         ];
     }
 }

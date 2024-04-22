@@ -14,14 +14,12 @@ class GuestController extends Controller
     public function index()
     {
         $guest = Guest::all();
-        $vehicle = Vehicle::all();
-        return view('guest.index', compact('guest', 'vehicle'));
+        return view('guest.index', compact('guest'));
     }
 
     public function create()
     {
-        $vehicle = Vehicle::all();
-        return view('guest.create', compact('vehicle'));
+        return view('guest.create');
     }
 
     public function store(GuestStoreRequest $request)
@@ -37,17 +35,17 @@ class GuestController extends Controller
             $guest->save();
 
             if ($request->has('has_vehicle') && $request->input('has_vehicle') == 'Yes') {
-                $vehicle = new Vehicle([
-                    'type' => $request->input('type'),
-                    'license_plate' => $request->input('license_plate'),
-                ]);
+                $guest->vehicles()->create([
+                    'type' => $request->input('type'), 
+                    'license_plate' => $request->input('license_plate')]);
 
                 // Simpan kendaraan dan hubungkan dengan tamu yang sesuai
-                $guest->vehicles()->save($vehicle);
+                $guest->save();
             }
         });
 
-        return redirect()->route('guests.create')->with('success', 'Guest created successfully');
+        notify()->success('Guest created successfully!', 'Success');
+        return redirect()->route('guests.create');
     }
 
 
@@ -69,8 +67,7 @@ class GuestController extends Controller
 
     public function edit(Guest $guest)
     {
-        $vehicles = Vehicle::all(); // Gantilah dengan model kendaraan yang sesuai
-        return view('guest.edit', compact('guest', 'vehicles'));
+        return view('guest.edit', compact('guest'));
     }
 
     public function update(GuestUpdateRequest $request, Guest $guest)

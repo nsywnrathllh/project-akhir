@@ -13,8 +13,11 @@ return new class extends Migration {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
+            $table->text('address');
             $table->text('logo')->nullable();
+            $table->string('wa_endpoint')->nullable();
+            $table->string('wa_api_key')->nullable();
+            $table->string('wa_sender')->nullable();
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Name</th>
                             <th scope="col">Phone</th>
+                            <th scope="col">Alliance</th>
                             <th scope="col">Destination</th>
                             <th scope="col">Purpose</th>
                             <th scope="col">Vehicle</th>
@@ -31,6 +32,7 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->phone }}</td>
+                                <td>{{ $item->alliance }}</td>
                                 <td>{{ $item->destination }}</td>
                                 <td>{{ $item->purpose }}</td>
                                 <td>{{ $item->has_vehicle }}</td>
