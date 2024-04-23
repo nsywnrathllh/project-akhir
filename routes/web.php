@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VehicleController;
 use App\Models\Guest;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +22,7 @@ Route::get('/', function () {
 });
 
 Route::resource('guests', GuestController::class);
+Route::get('logs', [GuestController::class, 'index'])->name('logs');
 Route::resource('vehicles', VehicleController::class);
-Route::get('/guest/log', function () {
-    $guests = Guest::all();
-    return view('guest.log', compact('guests'));
-})->name('guest.log');
+Route::resource('settings', SettingController::class);
+

@@ -12,13 +12,14 @@ return new class extends Migration {
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicles_id')->constrained('vehicles')->cascadeOnDelete();
             $table->string('name');
-            $table->bigInteger('phone');
+            $table->string('phone');
+            $table->string('alliance');
             $table->enum('destination', ['TU', 'Walikelas', 'Guru', 'Bendahara', 'Kurikulum', 'Kesiswaan', 'Kepala Sekolah', 'Meeting', 'Lainnya']);
-            $table->string('purpose');
-            $table->string('checkin');
-            $table->string('checkout')->nullable();
+            $table->text('purpose');
+            $table->enum('has_vehicle', ['Yes', 'No']);
+            $table->dateTime('checkin');
+            $table->dateTime('checkout')->nullable();
             $table->mediumText('image_path')->nullable();
             $table->enum('status', ['Check Out', 'Still Inside'])->default('Still Inside');
             $table->timestamps();

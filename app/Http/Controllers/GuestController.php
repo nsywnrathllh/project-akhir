@@ -7,32 +7,47 @@ use App\Http\Requests\Guest\GuestUpdateRequest;
 use App\Models\Guest;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GuestController extends Controller
 {
     public function index()
     {
-        $guest = Guest::with('vehicles')->get();
+        $guest = Guest::all();
         return view('guest.index', compact('guest'));
     }
 
     public function create()
     {
-        $vehicles = Vehicle::all(); // Gantilah dengan model kendaraan yang sesuai
-        return view('guest.create', compact('vehicles'));
+        return view('guest.create');
     }
 
     public function store(GuestStoreRequest $request)
     {
-        $guest = Guest::create($request->validated());
+        DB::transaction(function () use ($request) {
+            $guest = new Guest($request->validated());
 
-        if ($request->has('image_data')) {
-            $imagePath = $this->saveImage($request->input('image_data'));
-            $guest->update(['image_path' => $imagePath]);
-        }
+            if ($request->has('image_data')) {
+                $imagePath = $this->saveImage($request->input('image_data'));
+                $guest->image_path = $imagePath;
+            }
 
-        return redirect()->route('guests.index')->with('success', 'Guest created successfully');
+            $guest->save();
+
+            if ($request->has('has_vehicle') && $request->input('has_vehicle') == 'Yes') {
+                $guest->vehicles()->create([
+                    'type' => $request->input('type'), 
+                    'license_plate' => $request->input('license_plate')]);
+
+                // Simpan kendaraan dan hubungkan dengan tamu yang sesuai
+                $guest->save();
+            }
+        });
+
+        notify()->success('Guest created successfully!', 'Success');
+        return redirect()->route('guests.create');
     }
+
 
     private function saveImage($imageData)
     {
@@ -52,8 +67,7 @@ class GuestController extends Controller
 
     public function edit(Guest $guest)
     {
-        $vehicles = Vehicle::all(); // Gantilah dengan model kendaraan yang sesuai
-        return view('guest.edit', compact('guest', 'vehicles'));
+        return view('guest.edit', compact('guest'));
     }
 
     public function update(GuestUpdateRequest $request, Guest $guest)
