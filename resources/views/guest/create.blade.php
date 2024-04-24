@@ -90,7 +90,7 @@
                 </div>
 
                 <input type="hidden" name="image_path" id="imageData" value="">
-                <button onclick="capturePhotoAndSave(); showCapturedImage();" class="btn btn-primary mt-3"> Ambil Foto dan
+                <button onclick="capturePhotoAndSave(); showCapturedImage();" id="btnSimpan" class="btn btn-primary mt-3"> Ambil Foto dan
                     Simpan</button>
             </form>
         </div>
@@ -167,4 +167,15 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tangkap peristiwa klik tombol "Simpan"
+            document.getElementById('btnSimpan').addEventListener('click', function() {
+                // Lakukan redirect ke halaman cetak setelah klik tombol "Simpan"
+                window.location.href = "{{ route('guests.print', ['guestId']) }}";
+            });
+        });
+    </script>
+
 @endsection

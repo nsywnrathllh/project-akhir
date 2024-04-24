@@ -25,4 +25,5 @@ Route::resource('guests', GuestController::class);
 Route::get('logs', [GuestController::class, 'index'])->name('logs');
 Route::resource('vehicles', VehicleController::class);
 Route::resource('settings', SettingController::class);
+Route::get('guests/print/{$guest}', [GuestController::class, 'print'])->name('guests.print');
 
