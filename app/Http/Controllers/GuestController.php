@@ -9,6 +9,9 @@ use App\Models\Setting;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class GuestController extends Controller
 {
@@ -28,6 +31,11 @@ class GuestController extends Controller
        
             $guest = new Guest($request->validated());
 
+            // if ($request->has('scan_ktp')) {
+            //     $scanKtpPath = $this->saveImage($request->file('scan_ktp'), 'scan_ktp');
+            //     $guest->scan_ktp = $scanKtpPath;
+            // }
+
             if ($request->has('image_data')) {
                 $imagePath = $this->saveImage($request->input('image_data'));
                 $guest->image_path = $imagePath;
@@ -37,11 +45,9 @@ class GuestController extends Controller
 
             if ($request->has('has_vehicle') && $request->input('has_vehicle') == 'Yes') {
                 $guest->vehicles()->create([
-                    'type' => $request->input('type'), 
-                    'license_plate' => $request->input('license_plate')]);
-
-                // Simpan kendaraan dan hubungkan dengan tamu yang sesuai
-                $guest->save();
+                    'type' => $request->input('type'),
+                    'license_plate' => $request->input('license_plate')
+                ]);
             }
 
             // Simpan guest_id ke dalam sesi
@@ -53,9 +59,35 @@ class GuestController extends Controller
     }
 
 
-    private function saveImage($imageData)
+    public function showScanPage(Guest $guest)
     {
-        $folderPath = 'images/guests/';
+        return view('guest.logout', compact('guest'));
+    }
+
+    public function checkoutByBarcode(Guest $guest)
+    {
+        // Misalkan kode barcode yang discan adalah kode tamu, maka Anda bisa membandingkannya dengan ID tamu
+        if ($guest) {
+            // Lakukan proses checkout hanya jika status masih 'Still Inside'
+            if ($guest->status == 'Still Inside') {
+                $guest->update([
+                    'status' => 'Check Out',
+                    'checkout' => now(),
+                ]);
+
+                return redirect()->route('guests.index')->with('success', 'Guest checked out successfully.');
+            } else {
+                return redirect()->route('guests.index')->with('error', 'Guest already checked out.');
+            }
+        } else {
+            return redirect()->route('guests.index')->with('error', 'Guest not found.');
+        }
+    }
+
+
+    private function saveImage($imageData, $folder = 'guests')
+    {
+        $folderPath = 'images/' . $folder . '/';
         if (!file_exists($folderPath)) {
             mkdir($folderPath, 0777, true);
         }
@@ -68,6 +100,7 @@ class GuestController extends Controller
 
         return $filePath;
     }
+
 
     public function edit(Guest $guest)
     {
