@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\NotificationTargetController;
 use App\Models\Guest;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,7 @@ Route::resource('guests', GuestController::class);
 Route::get('logs', [GuestController::class, 'index'])->name('logs');
 Route::resource('vehicles', VehicleController::class);
 Route::resource('settings', SettingController::class);
+Route::get('/guest/scan/{guest}', [GuestController::class, 'showScanPage'])->name('guest.scan');
+Route::resource('notification-target', NotificationTargetController::class);
+
 

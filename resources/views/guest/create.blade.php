@@ -1,6 +1,6 @@
 @extends('layouts.template-mazer')
 @section('content')
-@notifyCss
+    @notifyCss
     <div class="page-heading">
         <h3>Add Data Guest</h3>
     </div>
@@ -41,6 +41,18 @@
                 </div>
 
                 <x-text-input name="purpose" label="Purpose" required />
+                <div class="mb-3">
+                    <label for="scan_ktp" class="form-label">Scan KTP</label>
+                    <input type="file" class="form-control" id="scan_ktp" name="scan_ktp" accept="image/*" required>
+                    @if (isset($guest) && $guest->scan_ktp)
+                        <img src="{{ asset($guest->scan_ktp) }}" alt="Scan KTP"
+                            style="max-width: 200px; max-height: 200px;">
+                    @endif
+                    @error('scan_ktp')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
 
                 <div class="form-group">
                     <label for="has_vehicle">Opsi Kendaraan</label>
@@ -52,17 +64,17 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                
+
                 <div class="form-group" id="vehicle_fields" style="display: none;">
                     <label for="type">Tipe</label>
                     <input type="text" class="form-control" id="type" name="type">
                 </div>
-                
+
                 <div class="form-group" id="license_plate_fields" style="display: none;">
                     <label for="license_plate">Plat Nomor</label>
                     <input type="text" class="form-control" id="license_plate" name="license_plate">
                 </div>
-                
+
                 <x-text-input type="datetime-local" name="checkin" label="Check In" required />
                 <x-text-input type="datetime-local" name="checkout" label="Check Out" />
 
@@ -138,6 +150,18 @@
         function showCapturedImage() {
             const photo = document.getElementById('capturedImage');
             photo.style.display = 'block';
+        }
+
+        function previewImage(input) {
+            const preview = document.getElementById('previewImage');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.setAttribute('src', e.target.result);
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
         }
 
         setupCamera();

@@ -107,6 +107,14 @@
                                 <span>Setting</span>
                             </a>
                         </li>
+
+                        <li class="sidebar-item {{ request()->is('notification-target*') ? 'active' : '' }}">
+                            <a href="{{ route('notification-target.index') }}" class='sidebar-link'>
+                                <i class="bi bi-bell"></i> <!-- Icon untuk notifikasi -->
+                                <span>Notification Target</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
