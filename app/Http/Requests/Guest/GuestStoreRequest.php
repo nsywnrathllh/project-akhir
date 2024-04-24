@@ -27,6 +27,7 @@ class GuestStoreRequest extends FormRequest
             'alliance' => 'required|string',
             'destination' => 'required|in:TU,Walikelas,Guru,Bendahara,Kurikulum,Kesiswaan,Kepala Sekolah,Meeting,Lainnya',
             'purpose' => 'required',
+            'scan_ktp' => 'required|image|mimes:png,jpg|max:2040',
             'has_vehicle' => 'required|in:Yes,No',
             'checkin' => 'required',
             'checkout' => 'nullable',
