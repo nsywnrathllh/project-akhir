@@ -6,7 +6,7 @@
     </div>
     <div class="card">
         <div class="card-body col-12 col-md-8">
-            <form action="{{ route('notification-target.store') }}" method="POST">
+            <form action="{{ route('notification-targets.store') }}" method="POST">
                 @csrf
                 @method('post')
 
@@ -39,7 +39,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary mt-3">Simpan</button>
             </form>
         </div>
     </div>
