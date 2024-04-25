@@ -50,9 +50,9 @@ class SettingController extends Controller
         // Simpan perubahan ke database
         $setting->save();
 
-        
+
         notify()->success('Setting updated successfully!', 'Success');
-        return redirect()->route('settings.index');
+        return redirect()->route('settings.index', $setting);
     }
 
 

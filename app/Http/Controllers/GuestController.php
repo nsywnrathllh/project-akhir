@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 
 class GuestController extends Controller
@@ -29,41 +30,41 @@ class GuestController extends Controller
 
     public function store(GuestStoreRequest $request)
     {
-       
-            $guest = new Guest($request->validated());
+
+        $guest = new Guest($request->validated());
 
 
-            if ($request->has('image_data')) {
-                $imagePath = $this->saveImage($request->input('image_data'));
-                $guest->image_path = $imagePath;
-            }
+        if ($request->has('image_data')) {
+            $imagePath = $this->saveImage($request->input('image_data'));
+            $guest->image_path = $imagePath;
+        }
 
-            $guest->save();
+        $guest->save();
 
-            if ($request->has('has_vehicle') && $request->input('has_vehicle') == 'Yes') {
-                $guest->vehicles()->create([
-                    'type' => $request->input('type'),
-                    'license_plate' => $request->input('license_plate')
-                ]);
-            }
+        if ($request->has('has_vehicle') && $request->input('has_vehicle') == 'Yes') {
+            $guest->vehicles()->create([
+                'type' => $request->input('type'),
+                'license_plate' => $request->input('license_plate')
+            ]);
+        }
 
-            // Simpan guest_id ke dalam sesi
-            session()->put('guest_id', $guest);
+        // Simpan guest_id ke dalam sesi
+        session()->put('guest_id', $guest);
 
-            $message = "Halo, {$guest->destination}\n";
-            $message .= "Anda akan mendapatkan tamu pada hari ini.\n\n";
-            $message .= "Nama : {$guest->name}\n";
-            $message .= "Asal Aliansi : {$guest->alliance}\n";
-            $message .= "Tujuan : {$guest->purpose}";
+        $message = "Halo, {$guest->destination}\n";
+        $message .= "Anda akan mendapatkan tamu pada hari ini.\n\n";
+        $message .= "Nama : {$guest->name}\n";
+        $message .= "Asal Aliansi : {$guest->alliance}\n";
+        $message .= "Tujuan : {$guest->purpose}";
 
-            $targetNotifications = $guest->targetNotifications;
-            foreach ($targetNotifications as $targetNotification) {
-                $recipientNumber = $targetNotification->phone;
-            }
+        $targetNotifications = $guest->targetNotifications;
+        foreach ($targetNotifications as $targetNotification) {
+            $recipientNumber = $targetNotification->phone;
+        }
 
-            $this->sendMessage($message, $recipientNumber);
+        $this->sendMessage($message, $recipientNumber);
 
-        
+
         notify()->success('Guest created successfully!', 'Success');
         return redirect()->route('guests.print', $guest);
     }
@@ -93,29 +94,37 @@ class GuestController extends Controller
     }
 
 
-    public function showScanPage(Guest $guest)
+    public function showScanPage()
     {
-        return view('guest.logout', compact('guest'));
+        return view('guest.logout');
     }
 
     public function checkoutByBarcode($barcode)
     {
-        $guest = Guest::find($barcode); // Anda mungkin perlu menyesuaikan ini tergantung bagaimana barcode Anda dibuat
+        try {
+            $guest = Guest::where('barcode', $barcode)->first();
 
-        if ($guest) {
-            // Lakukan proses checkout hanya jika status masih 'Still Inside'
-            if ($guest->status == 'Still Inside') {
-                $guest->update([
-                    'status' => 'Check Out',
-                    'checkout' => now(),
-                ]);
-
-                return redirect()->route('guests.index')->with('success', 'Guest checked out successfully.');
-            } else {
-                return redirect()->route('guests.index')->with('error', 'Guest already checked out.');
+            if (!$guest) {
+                Log::warning('Guest not found for barcode: ' . $barcode);
+                return redirect()->back()->with('failed', 'Data tamu tidak ditemukan');
             }
-        } else {
-            return redirect()->route('guests.index')->with('error', 'Guest not found.');
+
+            if ($guest->status === 'still inside') {
+                $guest->update([
+                    'status' => 'checkout',
+                    'checkout' => now()
+                ]);
+                Log::info('Status updated to "checkout" for guest with barcode: ' . $barcode);
+
+                notify()->success('Check Out successfully!', 'Success');
+                return redirect()->route('guests.index');
+            } else {
+                Log::warning('Status is not "still inside" for guest with barcode: ' . $barcode);
+                return back()->with('warning', 'Status tidak sesuai untuk checkout.');
+            }
+        } catch (\Exception $e) {
+            Log::error('Error in checkoutByBarcode method: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan dalam checkout berdasarkan barcode.');
         }
     }
 
@@ -174,7 +183,7 @@ class GuestController extends Controller
     {
 
         $setting = Setting::firstOrFail();
-        $userName = $guest->name;      
+        $userName = $guest->name;
         $phoneUser = $guest->phone;
         $alliance = $guest->alliance;
         $purpose = $guest->purpose;
