@@ -20,7 +20,7 @@
     <form action="">
         <div class="body-container">
             <div class="logo-container" style="display: flex; justify-content: center; align-items: center;">
-                <img style="max-width:200px; max-height:100px; margin-right: 35px;" src="{{ asset('logo/logo.png') }}">
+                <img style="max-width:100px; max-height:50px; margin-right: 35px;" src="{{ asset('logo/logo.png') }}">
             </div>
             <div class="text-center">
                 <input type="text" class="text-capitalize fst-italic bg-transparent border-0" id="address"

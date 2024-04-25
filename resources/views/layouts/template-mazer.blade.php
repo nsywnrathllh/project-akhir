@@ -23,7 +23,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo" height="100" width="130">
-                            <a href="#"><img src="{{ asset('logo/logo.png') }}"
+                            <a href="#"><img src="{{ asset('logo/logo-nobg.png') }}"
                                     alt="Logo" srcset=""></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
@@ -186,8 +186,8 @@
 
     <script src="{{ asset('mazer/assets/compiled/js/app.js') }}"></script>
 
-    <script src="{{ asset('mazer/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('mazer/assets/static/js/pages/dashboard.js') }}"></script>
+    {{-- <script src="{{ asset('mazer/assets/extensions/apexcharts/apexcharts.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('mazer/assets/static/js/pages/dashboard.js') }}"></script> --}}
 
 </body>
 

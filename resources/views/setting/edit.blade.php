@@ -14,7 +14,7 @@
                     <x-text-input name="address" label="Address" required :value="$setting->address" />
                     <div class="row">
                         <div class="mb-3">
-                            <a href="{{ asset('logo/logo.png') }}">
+                            <a href="{{ asset('logo/logo-nobg.png') }}">
                                 <img style="max-width: 150px; max-height: 100px;"
                                     src="{{ asset('logo/' . $setting->logo) }}" alt="Logo" title="click to view">
                             </a>
