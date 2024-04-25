@@ -21,6 +21,8 @@
                         <option value="Guru" {{ old('destination') == 'Guru' ? 'selected' : '' }}>Guru</option>
                         <option value="Bendahara" {{ old('destination') == 'Bendahara' ? 'selected' : '' }}>Bendahara
                         </option>
+                        <option value="Hubin" {{ old('destination') == 'Hubin' ? 'selected' : '' }}>Hubin
+                        </option>
                         <option value="Kurikulum" {{ old('destination') == 'Kurikulum' ? 'selected' : '' }}>Kurikulum
                         </option>
                         <option value="Kesiswaan" {{ old('destination') == 'Kesiswaan' ? 'selected' : '' }}>Kesiswaan

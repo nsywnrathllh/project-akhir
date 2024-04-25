@@ -41,7 +41,7 @@
                 </div>
 
                 <x-text-input name="purpose" label="Purpose" required />
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="scan_ktp" class="form-label">Scan KTP</label>
                     <input type="file" class="form-control" id="scan_ktp" name="scan_ktp" accept="image/*" required>
                     @if (isset($guest) && $guest->scan_ktp)
@@ -51,7 +51,7 @@
                     @error('scan_ktp')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> --}}
 
 
                 <div class="form-group">

@@ -28,5 +28,7 @@ Route::resource('vehicles', VehicleController::class);
 Route::resource('settings', SettingController::class);
 Route::get('/guest/scan/{guest}', [GuestController::class, 'showScanPage'])->name('guest.scan');
 Route::resource('notification-target', NotificationTargetController::class);
+Route::get('/guest/checkout/{barcode}', [GuestController::class, 'checkoutByBarcode'])->name('guest.checkout');
+
 
 
