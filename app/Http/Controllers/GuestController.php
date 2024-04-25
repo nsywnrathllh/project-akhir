@@ -99,32 +99,40 @@ class GuestController extends Controller
         return view('guest.logout');
     }
 
-    public function checkoutByBarcode($barcode)
+    public function scan(Request $request)
     {
+        dd($request->all());
         try {
-            $guest = Guest::where('barcode', $barcode)->first();
+            $guestId = $request->input('guest_id');
+            Log::info('Received scanned guest ID: ' . $guestId);
 
-            if (!$guest) {
-                Log::warning('Guest not found for barcode: ' . $barcode);
+            $guest = Guest::find($guestId);
+
+            if ($guest) {
+                Log::info('Found guest with ID: ' . $guestId);
+
+                if ($guest->status === 'still inside') {
+                    // Ubah status tamu menjadi "checkout"
+                    $guest->update(['status' => 'checkout', 'checkout' => now()]);
+                    Log::info('Status updated to "checkout" for guest with ID: ' . $guestId);
+
+                    // Kirim notifikasi WhatsApp ke pengguna terkait
+                    // (Ubah sesuai kebutuhan Anda, jika Anda ingin mengirim notifikasi kepada pihak lain)
+
+                    return redirect()->route('guest.index')->with('success', 'Status tamu berhasil diubah menjadi checkout.');
+
+                } else {
+                    Log::warning('Status is not "still inside" for guest with ID: ' . $guestId);
+                    return back()->with('warning', 'Status tamu tidak sesuai untuk checkout.');
+                }
+            } else {
+                Log::warning('Guest not found for ID: ' . $guestId);
                 return redirect()->back()->with('failed', 'Data tamu tidak ditemukan');
             }
 
-            if ($guest->status === 'still inside') {
-                $guest->update([
-                    'status' => 'checkout',
-                    'checkout' => now()
-                ]);
-                Log::info('Status updated to "checkout" for guest with barcode: ' . $barcode);
-
-                notify()->success('Check Out successfully!', 'Success');
-                return redirect()->route('guests.index');
-            } else {
-                Log::warning('Status is not "still inside" for guest with barcode: ' . $barcode);
-                return back()->with('warning', 'Status tidak sesuai untuk checkout.');
-            }
         } catch (\Exception $e) {
-            Log::error('Error in checkoutByBarcode method: ' . $e->getMessage());
-            return back()->with('error', 'Terjadi kesalahan dalam checkout berdasarkan barcode.');
+            Log::error('Error in scan method: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan dalam pemindaian.');
         }
     }
 

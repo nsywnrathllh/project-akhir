@@ -8,12 +8,13 @@
         <div class="card-body">
             <div class="container col-lg-10 py-11">
                 <div class="card shadow rounded-3 p-3 border-0">
-                    <p class="text-center mb-3" style="color: #000000;">Thank you for visiting!</p>
-                    <p class="text-center mb-3" style="color: #000000;">Scan to logout</p>
+                    {{-- <p class="text-center mb-3" style="color: #98f0ff;">Thank you for visiting!</p> --}}
+                    <p class="text-center mb-3" style="color: #98f0ff;">Scan to logout</p>
                     <video id="preview" playsinline autoplay muted style="width: 100%;"></video>
                     <form action="{{ route('guest.scan') }}" method="POST" id="form">
                         @csrf
                         <input type="hidden" name="guest_id" id="guest_id">
+                        <input type="hidden" name="status" id="status" value="Still Inside">
                     </form>
                 </div>
             </div>
@@ -39,7 +40,7 @@
             });
 
             scanner.addListener('scan', function(c) {
-                document.getElementById('event_registration_id').value = c;
+                document.getElementById('guest_id').value = c;
                 document.getElementById('form').submit();
             });
         });
@@ -81,5 +82,16 @@
         }
 
         openScanner();
+    </script>
+    <script>
+        @if (Session::has('success'))
+            toastr.info("{{ Session::get('success') }}", "Okei!", {
+                positionClass: "toast-top-center"
+            });
+        @elseif (Session::has('failed'))
+            toastr.error("{{ Session::get('failed') }}", "Oops!", {
+                positionClass: "toast-top-center"
+            });
+        @endif
     </script>
 @endsection
