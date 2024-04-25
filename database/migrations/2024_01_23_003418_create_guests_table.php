@@ -15,9 +15,8 @@ return new class extends Migration {
             $table->string('name');
             $table->string('phone');
             $table->string('alliance');
-            $table->enum('destination', ['TU', 'Walikelas', 'Guru', 'Bendahara', 'Kurikulum', 'Kesiswaan', 'Kepala Sekolah', 'Meeting', 'Lainnya']);
+            $table->enum('destination', ['TU', 'Walikelas', 'Guru', 'Bendahara', 'Kurikulum', 'Kesiswaan','Hubin', 'Kepala Sekolah', 'Meeting', 'Lainnya']);
             $table->text('purpose');
-            // $table->string('scan_ktp');
             $table->enum('has_vehicle', ['Yes', 'No']);
             $table->dateTime('checkin');
             $table->dateTime('checkout')->nullable();

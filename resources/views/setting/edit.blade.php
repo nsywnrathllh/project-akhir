@@ -14,7 +14,7 @@
                     <x-textarea-input name="address" label="Address" required :value="$setting->address" />
                     <div class="row">
                         <div class="mb-3">
-                            <a href="{{ asset('logo/' . $setting->logo) }}">
+                            <a href="{{ asset('logo/logo.png') }}">
                                 <img style="max-width: 150px; max-height: 100px;" src="{{ asset('logo/' . $setting->logo) }}" alt="Logo" title="click to view">
                             </a>
                             <x-text-input type="file" name="logo" label="Logo" :value="$setting->logo" />

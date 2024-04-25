@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="mb-3">
-                    <a href="{{ route('notification-target.create') }}" class="btn btn-primary">Tambah</a>
+                    <a href="{{ route('notification-targets.create') }}" class="btn btn-primary">Tambah</a>
                 </div>
                 <table class="table responsive" id="table1">
                     <thead>

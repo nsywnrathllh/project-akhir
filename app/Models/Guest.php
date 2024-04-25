@@ -16,9 +16,9 @@ class Guest extends Model
         return $this->hasMany(Vehicle::class);
     }
 
-    public function notificationtargets()
+    public function targetNotifications()
     {
-        return $this->hasMany(NotificationTarget::class);
+        return $this->hasMany(NotificationTarget::class, 'destination', 'destination');
     }
 
 }
