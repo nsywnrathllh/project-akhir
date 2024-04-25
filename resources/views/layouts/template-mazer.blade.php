@@ -23,7 +23,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo" height="100" width="130">
-                            <a href="#"><img src="{{ asset('mazer/assets/compiled/svg/logo.svg') }}"
+                            <a href="#"><img src="{{ asset('logo/logo.png') }}"
                                     alt="Logo" srcset=""></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
@@ -108,8 +108,8 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item {{ request()->is('notification-target*') ? 'active' : '' }}">
-                            <a href="{{ route('notification-target.index') }}" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->is('notification-targets*') ? 'active' : '' }}">
+                            <a href="{{ route('notification-targets.index') }}" class='sidebar-link'>
                                 <i class="bi bi-bell"></i> <!-- Icon untuk notifikasi -->
                                 <span>Notification Target</span>
                             </a>
@@ -128,9 +128,7 @@
                 </header>
                 <nav class="navbar navbar-expand navbar-light navbar-top">
                     <div class="container-fluid">
-
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin: 80%">
+                        {{-- <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin: 80%">
                             <div class="dropdown">
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
@@ -163,7 +161,7 @@
                                                 class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </nav>
             </div>

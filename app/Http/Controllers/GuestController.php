@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,10 +32,6 @@ class GuestController extends Controller
        
             $guest = new Guest($request->validated());
 
-            // if ($request->has('scan_ktp')) {
-            //     $scanKtpPath = $this->saveImage($request->file('scan_ktp'), 'scan_ktp');
-            //     $guest->scan_ktp = $scanKtpPath;
-            // }
 
             if ($request->has('image_data')) {
                 $imagePath = $this->saveImage($request->input('image_data'));
@@ -53,9 +50,46 @@ class GuestController extends Controller
             // Simpan guest_id ke dalam sesi
             session()->put('guest_id', $guest);
 
+            $message = "Halo, {$guest->destination}\n";
+            $message .= "Anda akan mendapatkan tamu pada hari ini.\n\n";
+            $message .= "Nama : {$guest->name}\n";
+            $message .= "Asal Aliansi : {$guest->alliance}\n";
+            $message .= "Tujuan : {$guest->purpose}";
+
+            $targetNotifications = $guest->targetNotifications;
+            foreach ($targetNotifications as $targetNotification) {
+                $recipientNumber = $targetNotification->phone;
+            }
+
+            $this->sendMessage($message, $recipientNumber);
+
         
         notify()->success('Guest created successfully!', 'Success');
         return redirect()->route('guests.print', $guest);
+    }
+
+    public function sendMessage($message, $recipientNumber)
+    {
+        $setting = Setting::first();
+        $endPoint = $setting->wa_endpoint;
+        $apiKey = $setting->wa_api_key;
+        $sender = $setting->wa_sender;
+
+        try {
+            // Kirim pesan teks
+            $responseText = Http::post($endPoint, [
+                'api_key' => $apiKey,
+                'sender' => $sender,
+                'number' => $recipientNumber,
+                'message' => $message,
+            ]);
+            if (!$responseText->successful()) {
+                throw new \Exception('Failed to send WhatsApp text message');
+            }
+        } catch (\Exception $e) {
+            // Tangani jika gagal mengirim pesan WhatsApp
+            // Anda bisa melakukan redirect atau tindakan lain di sini
+        }
     }
 
 

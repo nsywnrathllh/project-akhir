@@ -28,6 +28,8 @@
                         </option>
                         <option value="Kesiswaan" {{ old('destination') == 'Kesiswaan' ? 'selected' : '' }}>Kesiswaan
                         </option>
+                        <option value="Hubin" {{ old('destination') == 'Hubin' ? 'selected' : '' }}>Hubin
+                        </option>
                         <option value="Kepala Sekolah" {{ old('destination') == 'Kepala Sekolah' ? 'selected' : '' }}>
                             Kepala Sekolah
                         </option>
@@ -41,18 +43,6 @@
                 </div>
 
                 <x-text-input name="purpose" label="Purpose" required />
-                <div class="mb-3">
-                    <label for="scan_ktp" class="form-label">Scan KTP</label>
-                    <input type="file" class="form-control" id="scan_ktp" name="scan_ktp" accept="image/*" required>
-                    @if (isset($guest) && $guest->scan_ktp)
-                        <img src="{{ asset($guest->scan_ktp) }}" alt="Scan KTP"
-                            style="max-width: 200px; max-height: 200px;">
-                    @endif
-                    @error('scan_ktp')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
 
                 <div class="form-group">
                     <label for="has_vehicle">Opsi Kendaraan</label>

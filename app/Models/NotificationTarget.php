@@ -13,7 +13,7 @@ class NotificationTarget extends Model
 
     public function guest()
     {
-        return $this->belongsTo(Guest::class);
+        return $this->belongsTo(Guest::class, 'destination', 'destination');
     }
 
 }
