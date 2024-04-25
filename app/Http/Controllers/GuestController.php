@@ -60,9 +60,10 @@ class GuestController extends Controller
         return view('guest.logout', compact('guest'));
     }
 
-    public function checkoutByBarcode(Guest $guest)
+    public function checkoutByBarcode($barcode)
     {
-        // Misalkan kode barcode yang discan adalah kode tamu, maka Anda bisa membandingkannya dengan ID tamu
+        $guest = Guest::find($barcode); // Anda mungkin perlu menyesuaikan ini tergantung bagaimana barcode Anda dibuat
+
         if ($guest) {
             // Lakukan proses checkout hanya jika status masih 'Still Inside'
             if ($guest->status == 'Still Inside') {
