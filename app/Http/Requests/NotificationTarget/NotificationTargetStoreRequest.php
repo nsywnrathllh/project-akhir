@@ -23,7 +23,7 @@ class NotificationTargetStoreRequest extends FormRequest
     {
         return [
             'phone' => 'required|string',
-            'destination' => 'required|string|in:TU,Walikelas,Guru,Bendahara,Kurikulum,Kesiswaan,Kepala Sekolah,Meeting,Lainnya',
+            'destination' => 'required|string|in:TU,Walikelas,Guru,Bendahara,Kurikulum,Hubin,Kesiswaan,Kepala Sekolah,Meeting,Lainnya',
         ];
     }
 }

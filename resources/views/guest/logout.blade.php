@@ -38,10 +38,11 @@
             Quagga.onDetected(function(data) {
                 Quagga.stop();
                 let code = data.codeResult.code;
+                console.log('Detected Barcode:', code); // Logging untuk debug
                 document.getElementById('scanned-result').innerText = 'Scanned Barcode: ' + code;
-                // Lakukan sesuatu dengan kode barcode yang sudah discan, misalnya simpan atau lakukan checkout
                 window.location.href = `/guest/checkout/${code}`;
             });
+
         }
 
         openScanner();

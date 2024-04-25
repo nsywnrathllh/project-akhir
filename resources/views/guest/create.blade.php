@@ -43,7 +43,6 @@
                 </div>
 
                 <x-text-input name="purpose" label="Purpose" required />
-
                 <div class="form-group">
                     <label for="has_vehicle">Opsi Kendaraan</label>
                     <select class="form-control" id="has_vehicle" name="has_vehicle" required>

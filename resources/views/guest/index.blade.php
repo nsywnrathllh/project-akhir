@@ -18,7 +18,7 @@
                             <th scope="col">Alliance</th>
                             <th scope="col">Destination</th>
                             <th scope="col">Purpose</th>
-                            <th scope="col">KTP</th>
+                            {{-- <th scope="col">KTP</th> --}}
                             <th scope="col">Vehicle</th>
                             <th scope="col">Tipe Kendaraan</th>
                             <th scope="col">Plat Nomor</th>
@@ -41,7 +41,7 @@
                                 <td>{{ $item->alliance }}</td>
                                 <td>{{ $item->destination }}</td>
                                 <td>{{ $item->purpose }}</td>
-                                <td>{{ $item->scan_ktp }}</td>
+                                {{-- <td>{{ $item->scan_ktp }}</td> --}}
                                 {{-- <td>
                                     @if ($item->scan_ktp)
                                         <img src="{{ Storage::url($item->scan_ktp) }}"
