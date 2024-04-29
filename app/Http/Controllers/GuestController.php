@@ -93,11 +93,10 @@ class GuestController extends Controller
         }
     }
 
-
-    public function showScanPage()
-    {
-        return view('guest.logout');
-    }
+    // public function showScanPage()
+    // {
+    //     return view('guest.logout');
+    // }
 
     public function scan(Request $request)
     {

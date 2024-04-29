@@ -30,8 +30,8 @@ Route::get('guests/print/{guest}', [GuestController::class, 'print'])->name('gue
 Route::get('/guest/scan/{guest}', [GuestController::class, 'showScanPage'])->name('guest.scan');
 Route::resource('notification-targets', NotificationTargetController::class);
 Route::get('/guest/checkout/{barcode}', [GuestController::class, 'checkoutByBarcode'])->name('guest.checkout');
-Route::get('/guest/scan', [GuestController::class, 'showScanPage'])->name('guest.scan');
-Route::post('/guest/scan', [GuestController::class, 'showScanPage'])->name('guest.scan');
+// Route::get('/guest/scan', [GuestController::class, 'showScanPage'])->name('guest.scan');
+// Route::post('/guest/scan', [GuestController::class, 'showScanPage'])->name('guest.scan');
 
 
 
