@@ -26,7 +26,8 @@
                             <th scope="col">CheckOut</th>
                             <th scope="col">Image</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Scan</th>
+                            {{-- <th scope="col">Scan</th> --}}
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,14 +75,23 @@
                                 <td>{{ $item->status }}</td>
                                 <td>{{ $item->scan }}</td>
                                 <td>
-                                <td>
-                                    @if ($item->status == 'Still Inside')
-                                        <a href="{{ route('guest.scan', $item->id) }}" class="btn btn-info">Scan
-                                            Checkout</a>
-                                    @else
-                                        Already Checked Out
-                                    @endif
-                                </td>
+                                    <div class="d-flex">
+                                        @if ($item->status == 'Still Inside')
+                                            <a href="{{ route('guest.scan', $item->id) }}" class="btn btn-info me-2"><i
+                                                    class="bi bi-camera"></i></a>
+                                        @else
+                                            <button class="btn btn-secondary me-2" disabled><i
+                                                    class="bi bi-camera"></i></button>
+                                        @endif
+                                        <form action="{{ route('guests.destroy', $item->id) }}" method="POST"
+                                            style="display: inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this item?');"><i
+                                                    class="bi bi-trash"></i></button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
