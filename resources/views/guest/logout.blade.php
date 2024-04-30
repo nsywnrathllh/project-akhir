@@ -11,7 +11,7 @@
                     <p class="text-center mb-3" style="color: #000000;">Thank you for visiting!</p>
                     <p class="text-center mb-3" style="color: #000000;">Scan to logout</p>
                     <video id="preview" playsinline autoplay muted style="width: 100%;"></video>
-                    <form action="{{ route('guest.scan') }}" method="POST" id="form">
+                    <form action="{{ route('guest.scan.post') }}" method="POST" id="form">
                         @csrf
                         <input type="hidden" name="guest_id" id="guest_id">
                     </form>
@@ -44,7 +44,7 @@
                 document.getElementById('scanned-result').innerText = c;
 
                 // *** uncomment kode dibawah ini jika ingin langsung submit setelah scan
-                // document.getElementById('form').submit();
+                document.getElementById('form').submit();
             });
         });
     </script>

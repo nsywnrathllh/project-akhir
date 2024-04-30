@@ -93,14 +93,13 @@ class GuestController extends Controller
         }
     }
 
-    // public function showScanPage()
-    // {
-    //     return view('guest.logout');
-    // }
+    public function showScanPage()
+    {
+        return view('guest.logout');
+    }
 
     public function scan(Request $request)
     {
-        dd($request->all());
         try {
             $guestId = $request->input('guest_id');
             Log::info('Received scanned guest ID: ' . $guestId);
@@ -110,15 +109,15 @@ class GuestController extends Controller
             if ($guest) {
                 Log::info('Found guest with ID: ' . $guestId);
 
-                if ($guest->status === 'still inside') {
-                    // Ubah status tamu menjadi "checkout"
-                    $guest->update(['status' => 'checkout', 'checkout' => now()]);
+                if ($guest->status === 'Still Inside') {
+                    // Ubah status tamu menjadi "Check Out"
+                    $guest->update(['status' => 'Check Out', 'checkout' => now()]);
                     Log::info('Status updated to "checkout" for guest with ID: ' . $guestId);
 
                     // Kirim notifikasi WhatsApp ke pengguna terkait
                     // (Ubah sesuai kebutuhan Anda, jika Anda ingin mengirim notifikasi kepada pihak lain)
 
-                    return redirect()->route('guest.index')->with('success', 'Status tamu berhasil diubah menjadi checkout.');
+                    return redirect()->route('logs')->with('success', 'Status tamu berhasil diubah menjadi checkout.');
 
                 } else {
                     Log::warning('Status is not "still inside" for guest with ID: ' . $guestId);
@@ -135,7 +134,6 @@ class GuestController extends Controller
         }
     }
 
-
     private function saveImage($imageData, $folder = 'guests')
     {
         $folderPath = 'images/' . $folder . '/';
@@ -151,7 +149,6 @@ class GuestController extends Controller
 
         return $filePath;
     }
-
 
     public function edit(Guest $guest)
     {

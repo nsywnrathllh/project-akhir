@@ -9,7 +9,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="mb-3">
-                    <a href="{{ route('notification-targets.create') }}" class="btn btn-primary">Tambah</a>
+                    <a href="{{ route('notification-targets.create') }}" class="btn btn-primary">
+                        <i class="bi bi-plus"></i>
+                    </a>
                 </div>
                 <table class="table responsive" id="table1">
                     <thead>
@@ -17,6 +19,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Phone</th>
                             <th scope="col">Destination</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,6 +28,17 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $item->phone }}</td>
                                 <td>{{ $item->destination }}</td>
+                                <td>
+                                    <form action="{{ route('notification-targets.destroy', $item->id) }}" method="POST"
+                                        style="display: inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this item?');">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
