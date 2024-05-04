@@ -2,7 +2,7 @@
 @section('content')
     @notifyCss
     <div class="page-heading">
-        <h3>Add Data Guest</h3>
+        <h3>Masukkan Data Tamu</h3>
     </div>
     <div class="card">
         <div class="card-body col-12 col-md-8">
@@ -11,12 +11,12 @@
                 <input type="hidden" name="image_data" id="imageData" value="">
                 @method('post')
 
-                <x-text-input name="name" label="Name" required />
-                <x-text-input name="phone" label="Phone Number" required />
-                <x-text-input name="alliance" label="Alliance" required />
+                <x-text-input name="name" label="Nama" required />
+                <x-text-input name="phone" label="Nomor Telepon" required />
+                <x-text-input name="alliance" label="Asal" required />
 
                 <div class="mb-3">
-                    <label class="form-label">Destination</label>
+                    <label class="form-label">Tujuan Destinasi</label>
                     <select name="destination" class="form-control @error('destination') is-invalid @enderror">
                         <option value="TU" {{ old('destination') == 'TU' ? 'selected' : '' }}>TU</option>
                         <option value="Walikelas" {{ old('destination') == 'Walikelas' ? 'selected' : '' }}>Wali Kelas
@@ -42,12 +42,12 @@
                     @enderror
                 </div>
 
-                <x-text-input name="purpose" label="Purpose" required />
+                <x-text-input name="purpose" label="Tujuan Berkunjung" required />
                 <div class="form-group">
                     <label for="has_vehicle">Opsi Kendaraan</label>
                     <select class="form-control" id="has_vehicle" name="has_vehicle" required>
-                        <option value="Yes">Bawa</option>
-                        <option value="No" selected>Tidak</option>
+                        <option value="Yes">Membawa Kendaraan</option>
+                        <option value="No" selected>Tidak Membawa Kendaraan</option>
                     </select>
                     @error('has_vehicle')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group" id="vehicle_fields" style="display: none;">
-                    <label for="type">Tipe</label>
+                    <label for="type">Jenis Kendaraan</label>
                     <input type="text" class="form-control" id="type" name="type">
                 </div>
 
@@ -64,8 +64,8 @@
                     <input type="text" class="form-control" id="license_plate" name="license_plate">
                 </div>
 
-                <x-text-input type="datetime-local" name="checkin" label="Check In" required />
-                <x-text-input type="datetime-local" name="checkout" label="Check Out" />
+                <x-text-input type="datetime-local" name="checkin" label="Jam Masuk" required />
+                <x-text-input type="datetime-local" name="checkout" label="Jam Keluar (Tidak Wajib Diisi)" />
 
                 <div class="mb-3">
                     <label class="form-label">Status</label>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="mb-3">
                     <div class="card-body">
-                        <h3 class="card-title">Ambil Foto</h3>
+                        <h3 class="card-title">Ambil Gambar Wajah</h3>
                         <div>
                             <video id="cameraFeed" width="100%" height="auto" autoplay></video>
                             <canvas id="canvas" style="display: none;"></canvas>
@@ -91,8 +91,8 @@
                 </div>
 
                 <input type="hidden" name="image_path" id="imageData" value="">
-                <button onclick="capturePhotoAndSave(); showCapturedImage();" id="btnSimpan" class="btn btn-primary mt-3"> Ambil Foto dan
-                    Simpan</button>
+                <button onclick="capturePhotoAndSave(); showCapturedImage();" id="btnSimpan" class="btn btn-primary mt-3">
+                    Ambil Gambar dan Simpan</button>
             </form>
         </div>
     </div>
@@ -190,5 +190,4 @@
             });
         });
     </script>
-
 @endsection

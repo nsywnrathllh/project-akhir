@@ -2,7 +2,7 @@
 @section('content')
     @notifyCss
     <div class="page-heading">
-        <h3>Update Data Setting</h3>
+        <h3>Data Setting</h3>
     </div>
     <div class="page-content">
         <div class="card">
@@ -10,8 +10,8 @@
                 <form action="{{ route('settings.update', $setting) }}" method="POST">
                     @method('PUT')
                     @csrf
-                    <x-text-input name="name" label="Name" required :value="$setting->name" />
-                    <x-text-input name="address" label="Address" required :value="$setting->address" />
+                    <x-text-input name="name" label="Nama" required :value="$setting->name" />
+                    <x-text-input name="address" label="Alamat" required :value="$setting->address" />
                     <div class="row">
                         <div class="mb-3">
                             <a href="{{ asset('logo/logo-nobg.png') }}">
