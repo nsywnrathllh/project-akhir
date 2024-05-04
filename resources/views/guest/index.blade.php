@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
     <div class="page-heading">
-        <h3>Data Guest</h3>
+        <h3>Data Tamu</h3>
     </div>
     <div class="page-content">
         <div class="card">
@@ -13,21 +13,21 @@
                         <tr>
                             <th scope="col">No</th>
                             <th scope="col">QR</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Alliance</th>
-                            <th scope="col">Destination</th>
-                            <th scope="col">Purpose</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Nomor Telepon</th>
+                            <th scope="col">Asal</th>
+                            <th scope="col">Tujuan Destinasi</th>
+                            <th scope="col">Tujuan Berkunjung</th>
                             {{-- <th scope="col">KTP</th> --}}
-                            <th scope="col">Vehicle</th>
-                            <th scope="col">Tipe Kendaraan</th>
+                            <th scope="col">Kendaraan</th>
+                            <th scope="col">Jenis Kendaraan</th>
                             <th scope="col">Plat Nomor</th>
-                            <th scope="col">CheckIn</th>
-                            <th scope="col">CheckOut</th>
-                            <th scope="col">Image</th>
+                            <th scope="col">Jam Masuk</th>
+                            <th scope="col">Jam Keluar</th>
+                            <th scope="col">Gambar</th>
                             <th scope="col">Status</th>
                             {{-- <th scope="col">Scan</th> --}}
-                            <th scope="col">Action</th>
+                            <th scope="col">Opsi</th>
                         </tr>
                     </thead>
                     <tbody>

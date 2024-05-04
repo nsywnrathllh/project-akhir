@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
     <div class="page-heading">
-        <h3>Data Notification Target</h3>
+        <h3>Data Target Notifikasi</h3>
     </div>
     <div class="page-content">
         <div class="card">
@@ -17,9 +17,9 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Destination</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Nomor Telepon</th>
+                            <th scope="col">Tujuan Destinasi</th>
+                            <th scope="col">Opsi</th>
                         </tr>
                     </thead>
                     <tbody>
