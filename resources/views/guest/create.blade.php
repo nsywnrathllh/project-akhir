@@ -124,7 +124,6 @@
         function capturePhotoAndSave() {
             const video = document.getElementById('cameraFeed');
             const canvas = document.getElementById('canvas');
-            const photo = document.getElementById('capturedImage');
             const imageDataInput = document.getElementById('imageData');
 
             canvas.width = 400;
@@ -132,25 +131,7 @@
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
             const imageData = canvas.toDataURL('image/png');
-            photo.setAttribute('src', imageData);
-            imageDataInput.value = imageData;
-        }
-
-        function showCapturedImage() {
-            const photo = document.getElementById('capturedImage');
-            photo.style.display = 'block';
-        }
-
-        function previewImage(input) {
-            const preview = document.getElementById('previewImage');
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.setAttribute('src', e.target.result);
-                    preview.style.display = 'block';
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
+            imageDataInput.value = imageData; // Simpan gambar ke input tersembunyi
         }
 
         setupCamera();
