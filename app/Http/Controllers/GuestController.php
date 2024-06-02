@@ -17,10 +17,30 @@ use Illuminate\Support\Facades\Log;
 
 class GuestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $guest = Guest::all();
-        return view('guest.index', compact('guest'));
+
+        $logs = Guest::latest()
+        ->when($request->start && $request->end, function ($query) use ($request) {
+            $query->whereDate('checkin', '>=', $request->start)
+                ->whereDate('checkin', '<=', $request->end);
+        })
+        // ->when($request->driver, function ($query, $driver) {
+        //     $query->whereHas('driver', function ($query) use ($driver) {
+        //         $query->where('id', $driver);
+        //     });
+        // })
+        // ->when($request->schedule, function ($query, $schedule) {
+        //     $query->whereHas('schedule', function ($query) use ($schedule) {
+        //         $query->where('id', $schedule);
+        //     });
+        // })
+        ->get(); // Ubah sesuai kebutuhan
+
+        // dd($logs);
+
+        return view('guest.index', compact('guest', 'logs'));
     }
 
     public function create()

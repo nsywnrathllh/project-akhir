@@ -14,8 +14,8 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
-        $sourcePath = public_path('logo/logo-nobg.png');
-        File::copy($sourcePath, public_path('logo/logo-nobg.png'));
+        $sourcePath = public_path('logo/logo.png');
+        File::copy($sourcePath, public_path('logo/logo.png'));
         Setting::create([
             'name' => 'Buku Tamu Digital',
             'address' => 'Jl. Raya Karadenan No.7, Karadenan, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16111',

@@ -6,6 +6,7 @@ use App\Http\Requests\Setting\SettingStoreRequest;
 use App\Http\Requests\Setting\SettingUpdateRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
@@ -43,9 +44,9 @@ class SettingController extends Controller
         // Update other fields
         $setting->name = $validated['name'];
         $setting->address = $validated['address'];
-        $setting->wa_endpoint = $validated['wa_endpoint'];
-        $setting->wa_api_key = $validated['wa_api_key'];
-        $setting->wa_sender = $validated['wa_sender'];
+        $setting->wa_endpoint = Hash::make($validated['wa_endpoint']);
+        $setting->wa_api_key = Hash::make($validated['wa_api_key']);
+        $setting->wa_sender = Hash::make($validated['wa_sender']);
 
         // Simpan perubahan ke database
         $setting->save();
