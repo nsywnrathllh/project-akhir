@@ -5,6 +5,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\NotificationTargetController;
 use App\Models\Guest;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('setting.edit', ['setting' => Setting::first()]);
 });
 
 Route::resource('guests', GuestController::class);
