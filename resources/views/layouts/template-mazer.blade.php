@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/iconly.css') }}">
+    @stack('css')
 </head>
 
 <body>
@@ -180,11 +181,12 @@
             </footer>
         </div>
     </div>
+    <script src="{{ asset('/mazer/assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('mazer/assets/static/js/components/dark.js') }}"></script>
     <script src="{{ asset('mazer/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-
-
     <script src="{{ asset('mazer/assets/compiled/js/app.js') }}"></script>
+
+    @stack('js')
 
     {{-- <script src="{{ asset('mazer/assets/extensions/apexcharts/apexcharts.min.js') }}"></script> --}}
     {{-- <script src="{{ asset('mazer/assets/static/js/pages/dashboard.js') }}"></script> --}}

@@ -1,9 +1,5 @@
 @extends('layouts.template-mazer')
 @section('content')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <div class="page-heading">
         <h3>Data Tamu</h3>
     </div>
@@ -11,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="ml-2">
-                    <div id="rangedateFilter" class="btn btn-primary" style="cursor: pointer;">
+                    <div id="rangeDateFilter" class="btn btn-primary" style="cursor: pointer;">
                         <i class="fa fa-calendar"></i>&nbsp;
                         <span></span> <i class="fa fa-chevron-down"></i>
                     </div>
@@ -107,80 +103,87 @@
             </div>
         </div>
     </div>
+@endsection
+@push('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endpush
+@push('js')
     <script src="{{ asset('mazer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('mazer/assets/static/js/pages/simple-datatables.js') }}"></script>
-@endsection
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-            <script type="text/javascript">
-                $(function() {
-                    let dateRangeSelected = false;
 
-                    function cb(start, end) {
-                        let selectedRange = start.format('MMM D, YYYY') + ' - ' + end.format('MMM D, YYYY');
-                        $('#rangedateFilter span').html(selectedRange);
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            let dateRangeSelected = false;
 
-                        let params = new URLSearchParams();
+            function cb(start, end) {
+                let selectedRange = start.format('MMM D, YYYY') + ' - ' + end.format('MMM D, YYYY');
+                $('#rangeDateFilter span').html(selectedRange);
+                let params = new URLSearchParams();
 
-                        let currentUrlParams = new URLSearchParams(window.location.search);
-                        if (currentUrlParams.has('branch')) {
-                            params.append('branch', currentUrlParams.get('branch'));
-                        }
+                let currentUrlParams = new URLSearchParams(window.location.search);
+                if (currentUrlParams.has('branch')) {
+                    params.append('branch', currentUrlParams.get('branch'));
+                }
 
-                        if (start && end) {
-                            params.append('start', start.format('YYYY-MM-DD'));
-                            params.append('end', end.format('YYYY-MM-DD'));
-                        }
+                if (start && end) {
+                    params.append('start', start.format('YYYY-MM-DD'));
+                    params.append('end', end.format('YYYY-MM-DD'));
+                }
 
-                        let urlParams = params.toString();
-                        console.log(urlParams);
+                let urlParams = params.toString();
 
-                        let baseUrl = window.location.origin + window.location.pathname;
-                        let newUrl = baseUrl;
-                        if (urlParams) {
-                            newUrl += '?' + urlParams;
-                        }
+                let baseUrl = window.location.origin + window.location.pathname;
+                let newUrl = baseUrl;
+                if (urlParams) {
+                    newUrl += '?' + urlParams;
+                }
 
-                        if (!dateRangeSelected) {
-                            dateRangeSelected = true;
-                        } else {
-                            window.location.href = newUrl;
-                        }
-                    }
+                if (!dateRangeSelected) {
+                    dateRangeSelected = true;
+                } else {
+                    window.location.href = newUrl;
+                }
+            }
 
-                    let currentUrlParams = new URLSearchParams(window.location.search);
-                    let startDateParam = currentUrlParams.get('start');
-                    let endDateParam = currentUrlParams.get('end');
-                    let startDate = startDateParam ? moment(startDateParam) : moment();
-                    let endDate = endDateParam ? moment(endDateParam) : moment();
+            let currentUrlParams = new URLSearchParams(window.location.search);
+            let startDateParam = currentUrlParams.get('start');
+            let endDateParam = currentUrlParams.get('end');
+            let startDate = startDateParam ? moment(startDateParam) : moment();
+            let endDate = endDateParam ? moment(endDateParam) : moment();
 
-                    $('#rangedateFilter').daterangepicker({
-                        startDate: startDate,
-                        endDate: endDate,
-                        ranges: {
-                            'Today': [moment(), moment()],
-                            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                            'This Month': [moment().startOf('month'), moment().endOf('month')],
-                            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-                                'month').endOf('month')]
-                        }
-                    }, cb);
+            $('#rangeDateFilter').daterangepicker({
+                startDate: startDate,
+                endDate: endDate,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+                        'month').endOf('month')]
+                }
+            }, cb);
 
-                    cb(startDate, endDate);
+            cb(startDate, endDate);
 
-                    let isValidDateRange = startDate.isValid() && endDate.isValid();
-                    if (!dateRangeSelected && isValidDateRange) {
-                        let baseUrl = window.location.origin + window.location.pathname;
-                        let newUrl = baseUrl;
-                        if (startDate && endDate) {
-                            let params = new URLSearchParams(window.location.search);
-                            params.set('start', startDate.format('YYYY-MM-DD'));
-                            params.set('end', endDate.format('YYYY-MM-DD'));
-                            newUrl += '?' + params.toString();
-                        }
-                        window.history.replaceState({}, document.title, newUrl);
-                    }
-                });
-            </script>
+            let isValidDateRange = startDate.isValid() && endDate.isValid();
+            if (!dateRangeSelected && isValidDateRange) {
+                let baseUrl = window.location.origin + window.location.pathname;
+                let newUrl = baseUrl;
+                if (startDate && endDate) {
+                    let params = new URLSearchParams(window.location.search);
+                    params.set('start', startDate.format('YYYY-MM-DD'));
+                    params.set('end', endDate.format('YYYY-MM-DD'));
+                    newUrl += '?' + params.toString();
+                }
+                window.history.replaceState({}, document.title, newUrl);
+            }
+        });
+    </script>
+@endpush
