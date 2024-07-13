@@ -51,7 +51,7 @@ class NotificationTargetController extends Controller
         $target->update($validatedData);
 
         notify()->success('Notification Target updated successfully!', 'Success');
-        return redirect()->route('target-notifications.index');
+        return redirect()->route('notification-targets.index');
     }
 
     public function destroy(NotificationTarget $target)
@@ -60,6 +60,6 @@ class NotificationTargetController extends Controller
         $target->delete();
 
         notify()->success('Notification Target deleted successfully!', 'Success');
-        return redirect()->route('target-notifications.index');
+        return redirect()->route('notification-targets.index');
     }
 }

@@ -67,27 +67,6 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        {{-- <li class="sidebar-item {{(request()->is('admin/dashboard*')) ? 'active' : ''}}">
-                            <a href="{{route('admin.dashboard')}}" class='sidebar-link'>
-                                <i class="bi bi-speedometer2"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item {{(request()->is('admin/settings*')) ? 'active' : ''}}">
-                            <a href="{{route('admin.settings.index')}}" class='sidebar-link'>
-                                <i class="bi bi-gear"></i>
-                                <span>Pengaturan</span>
-                            </a>
-                        </li> --}}
-
-                        {{-- <li class="sidebar-item {{ request()->is('vehicles*') ? 'active' : '' }}">
-                            <a href="{{ route('vehicles.index') }}" class='sidebar-link'>
-                                <i class="bi bi-car-front-fill"></i>
-                                <span>Vehicle</span>
-                            </a>
-                        </li> --}}
-
                         <li class="sidebar-item {{ request()->is('guests*') ? 'active' : '' }}">
                             <a href="{{ route('guests.create') }}" class='sidebar-link'>
                                 <i class="bi bi-people"></i>
@@ -102,7 +81,7 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item {{ request()->is('settings*') ? 'active' : '' }}">
+                        <li class="sidebar-item {{ request()->is('settings*' , '/') ? 'active' : '' }}">
                             <a href="{{ route('settings.index') }}" class='sidebar-link'>
                                 <i class="bi bi-gear"></i>
                                 <span>Setting</span>
