@@ -65,7 +65,7 @@
                 </div>
 
                 <x-text-input type="datetime-local" name="checkin" label="Jam Masuk" required />
-                <x-text-input type="datetime-local" name="checkout" label="Jam Keluar (Tidak Wajib Diisi)" />
+                <x-text-input readonly type="datetime-local" name="checkout" label="Jam Keluar (Tidak Wajib Diisi)" />
 
                 <div class="mb-3">
                     <label class="form-label">Status</label>
@@ -79,6 +79,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                
                 <div class="mb-3">
                     <div class="card-body">
                         <h3 class="card-title">Ambil Gambar Wajah</h3>

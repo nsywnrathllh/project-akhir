@@ -29,7 +29,6 @@
                             <th scope="col">Jam Keluar</th>
                             <th scope="col">Gambar</th>
                             <th scope="col">Status</th>
-                            {{-- <th scope="col">Scan</th> --}}
                             <th scope="col">Opsi</th>
                         </tr>
                     </thead>
@@ -45,15 +44,6 @@
                                 <td>{{ $item->alliance }}</td>
                                 <td>{{ $item->destination }}</td>
                                 <td>{{ $item->purpose }}</td>
-                                {{-- <td>{{ $item->scan_ktp }}</td> --}}
-                                {{-- <td>
-                                    @if ($item->scan_ktp)
-                                        <img src="{{ Storage::url($item->scan_ktp) }}"
-                                            style="max-width: 100px; max-height: 100px;" alt="Scan KTP Image">
-                                    @else
-                                        No Image
-                                    @endif
-                                </td> --}}
                                 <td>{{ $item->has_vehicle }}</td>
                                 <td>
                                     @foreach ($item->vehicles as $vehicle)

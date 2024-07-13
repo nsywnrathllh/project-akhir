@@ -26,19 +26,8 @@ class GuestController extends Controller
             $query->whereDate('checkin', '>=', $request->start)
                 ->whereDate('checkin', '<=', $request->end);
         })
-        // ->when($request->driver, function ($query, $driver) {
-        //     $query->whereHas('driver', function ($query) use ($driver) {
-        //         $query->where('id', $driver);
-        //     });
-        // })
-        // ->when($request->schedule, function ($query, $schedule) {
-        //     $query->whereHas('schedule', function ($query) use ($schedule) {
-        //         $query->where('id', $schedule);
-        //     });
-        // })
-        ->get(); // Ubah sesuai kebutuhan
+        ->get(); 
 
-        // dd($logs);
 
         return view('guest.index', compact('guest', 'logs'));
     }
@@ -68,9 +57,9 @@ class GuestController extends Controller
             ]);
         }
 
-        // Simpan guest_id ke dalam sesi
         session()->put('guest_id', $guest);
 
+        $settings = Setting::first();
         $message = "Halo, {$guest->destination}\n";
         $message .= "Anda akan mendapatkan tamu pada hari ini.\n\n";
         $message .= "Nama : {$guest->name}\n";
@@ -82,37 +71,39 @@ class GuestController extends Controller
             $recipientNumber = $targetNotification->phone;
         }
 
-        $this->sendMessage($message, $recipientNumber);
+        $imageName = basename($guest->image_path);
+
+        Http::baseUrl('https://app.japati.id')
+            ->withHeader('X-Requested-With', 'XMLHttpRequest')
+            ->withToken('API-TOKEN-06epaMy7uzNOJeTat3iDXH1yhKusqkQO8ipwhwwJ9QAPbGZWqzpjeo')
+            ->attach('media_file', file_get_contents($guest->image_path), $imageName)
+            ->post('/api/send-message', [
+                'sender' => '6289683958855',
+                'number' => $recipientNumber,
+                'type' => 'media',
+                'message' => $message,
+            ]);
 
 
         notify()->success('Guest created successfully!', 'Success');
         return redirect()->route('guests.print', $guest);
     }
 
-    public function sendMessage($message, $recipientNumber)
+    private function saveImage($imageData, $folder = 'guests')
     {
-        $setting = Setting::first();
-        $endPoint = $setting->wa_endpoint;
-        $apiKey = $setting->wa_api_key;
-        $sender = $setting->wa_sender;
-
-        try {
-            // Kirim pesan teks
-            $responseText = Http::post($endPoint, [
-                'api_key' => $apiKey,
-                'sender' => $sender,
-                'number' => $recipientNumber,
-                'message' => $message,
-            ]);
-            if (!$responseText->successful()) {
-                throw new \Exception('Failed to send WhatsApp text message');
-            }
-        } catch (\Exception $e) {
-            // Tangani jika gagal mengirim pesan WhatsApp
-            // Anda bisa melakukan redirect atau tindakan lain di sini
+        $folderPath = 'images/' . $folder . '/';
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0777, true);
         }
-    }
 
+        $image = str_replace('data:image/png;base64,', '', $imageData);
+        $image = str_replace(' ', '+', $image);
+        $imageName = 'guest_' . time() . '.png';
+        $filePath = $folderPath . $imageName;
+        file_put_contents($filePath, base64_decode($image));
+
+        return $filePath;
+    }
     public function showScanPage()
     {
         return view('guest.logout');
@@ -154,21 +145,6 @@ class GuestController extends Controller
         }
     }
 
-    private function saveImage($imageData, $folder = 'guests')
-    {
-        $folderPath = 'images/' . $folder . '/';
-        if (!file_exists($folderPath)) {
-            mkdir($folderPath, 0777, true);
-        }
-
-        $image = str_replace('data:image/png;base64,', '', $imageData);
-        $image = str_replace(' ', '+', $image);
-        $imageName = 'guest_' . time() . '.png';
-        $filePath = $folderPath . $imageName;
-        file_put_contents($filePath, base64_decode($image));
-
-        return $filePath;
-    }
 
     public function edit(Guest $guest)
     {
