@@ -19,17 +19,12 @@ class GuestController extends Controller
 {
     public function index(Request $request)
     {
-        $guest = Guest::all();
-
-        $logs = Guest::latest()
-        ->when($request->start && $request->end, function ($query) use ($request) {
+        $guest = Guest::when($request->start && $request->end, function ($query) use ($request) {
             $query->whereDate('checkin', '>=', $request->start)
                 ->whereDate('checkin', '<=', $request->end);
-        })
-        ->get(); 
+        })->get();
 
-
-        return view('guest.index', compact('guest', 'logs'));
+        return view('guest.index', compact('guest'));
     }
 
     public function create()
