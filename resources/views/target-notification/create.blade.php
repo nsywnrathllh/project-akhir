@@ -1,8 +1,9 @@
 @extends('layouts.template-mazer')
 @section('content')
-    @notifyCss
+@notifyCss
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <div class="page-heading">
-        <h3>Add Notification Target</h3>
+        <h3>Tambah Target Notifikasi</h3>
     </div>
     <div class="card">
         <div class="card-body col-12 col-md-8">
@@ -13,7 +14,7 @@
                 <x-text-input name="phone" label="Phone Number" required />
 
                 <div class="mb-3">
-                    <label class="form-label">Destination</label>
+                    <label class="form-label">Tujuan Destinasi</label>
                     <select name="destination" class="form-control @error('destination') is-invalid @enderror">
                         <option value="TU" {{ old('destination') == 'TU' ? 'selected' : '' }}>TU</option>
                         <option value="Walikelas" {{ old('destination') == 'Walikelas' ? 'selected' : '' }}>Wali Kelas
@@ -39,7 +40,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+                <button type="submit" class="btn btn-primary mt-3" style="background-color: rgb(66, 66, 221);">Simpan</button>
             </form>
         </div>
     </div>

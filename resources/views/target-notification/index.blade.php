@@ -1,8 +1,6 @@
 @extends('layouts.template-mazer')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
-    <div class="page-heading">
+<div class="page-heading">
         <h3>Data Target Notifikasi</h3>
     </div>
     <div class="page-content">
@@ -18,7 +16,7 @@
                         <tr>
                             <th scope="col">No</th>
                             <th scope="col">Nomor Telepon</th>
-                            <th scope="col">Tujuan Destinasi</th>
+                            <th scope="col">Destinasi</th>
                             <th scope="col">Opsi</th>
                         </tr>
                     </thead>
@@ -34,7 +32,7 @@
                                         action="{{ route('notification-targets.destroy', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                        <button type="submit" class="btn btn-danger" style="background-color: rgb(221, 66, 66);"><i class="bi bi-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -44,7 +42,16 @@
             </div>
         </div>
     </div>
-
-    <script src="{{ asset('mazer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
-    <script src="{{ asset('mazer/assets/static/js/pages/simple-datatables.js') }}"></script>
+    @push('css')
+    @notifyCss
+        <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    @endpush
+    @push('js')
+    @notifyJs
+        <script src="{{ asset('mazer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
+        <script src="{{ asset('mazer/assets/static/js/pages/simple-datatables.js') }}"></script>
+    @endpush
+    <x-notify::notify />
 @endsection
