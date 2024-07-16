@@ -26,7 +26,7 @@ class NotificationTargetController extends Controller
         $target = new NotificationTarget($validatedData);
         $target->save();
 
-        notify()->success('Notification Target created successfully!', 'Success');
+        notify()->success('Target Notifikasi Berhasil Ditambahkan!', 'Success');
         return redirect()->route('notification-targets.index');
     }
 
@@ -40,7 +40,7 @@ class NotificationTargetController extends Controller
         $validatedData = $request->validated();
         $target->update($validatedData);
 
-        notify()->success('Notification Target updated successfully!', 'Success');
+        notify()->success('Target Notifikasi Berhasil Diubah!', 'Success');
         return redirect()->route('notification-targets.index');
     }
 
@@ -48,7 +48,7 @@ class NotificationTargetController extends Controller
     {
         NotificationTarget::where('id', $target)->delete();
 
-        notify()->success('Notification Target deleted successfully!', 'Success');
+        notify()->success('Target Notifikasi Berhasil Dihapus!', 'Success');
         return redirect()->route('notification-targets.index');
     }
 }

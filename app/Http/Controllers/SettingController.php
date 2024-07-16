@@ -41,18 +41,16 @@ class SettingController extends Controller
 
         $this->updateImage($request, 'logo', $setting);
 
-        // Update other fields
         $setting->name = $validated['name'];
         $setting->address = $validated['address'];
         $setting->wa_endpoint = ($validated['wa_endpoint']);
         $setting->wa_api_key = ($validated['wa_api_key']);
         $setting->wa_sender = ($validated['wa_sender']);
 
-        // Simpan perubahan ke database
         $setting->save();
 
 
-        notify()->success('Setting updated successfully!', 'Success');
+        notify()->success('Setting Berhasil Diubah!', 'Success');
         return redirect()->route('settings.index', $setting);
     }
 
@@ -60,9 +58,7 @@ class SettingController extends Controller
     private function updateImage(Request $request, $inputName, $model)
     {
         if ($request->hasFile($inputName)) {
-            $imagePath = 'logo'; // Sesuaikan dengan direktori yang diinginkan
-
-            // Delete old image
+            $imagePath = 'logo'; 
             if ($model->logo) {
                 Storage::delete($imagePath . '/' . $model->logo);
             }
@@ -70,10 +66,8 @@ class SettingController extends Controller
             $uploadedImage = $request->file($inputName);
             $newImageName = $inputName . '.' . $uploadedImage->getClientOriginalExtension();
 
-            // Store new image with a fixed name directly in public directory
             $uploadedImage->move(public_path($imagePath), $newImageName);
 
-            // Update the image file name in the model
             $model->logo = $newImageName;
         }
     }
