@@ -73,12 +73,11 @@ class GuestController extends Controller
             ->withToken('API-TOKEN-06epaMy7uzNOJeTat3iDXH1yhKusqkQO8ipwhwwJ9QAPbGZWqzpjeo')
             ->attach('media_file', file_get_contents($guest->image_path), $imageName)
             ->post('/api/send-message', [
-                'sender' => '6289683958855',
+                'gateway' => '6289683958855',
                 'number' => $recipientNumber,
                 'type' => 'media',
                 'message' => $message,
-            ]);
-
+        ]);
 
         notify()->success('Guest created successfully!', 'Success');
         return redirect()->route('guests.print', $guest);
