@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NotificationTarget\NotificationTargetStoreRequest;
 use App\Http\Requests\NotificationTarget\NotificationTargetUpdateRequest;
-use App\Models\Guest;
 use App\Models\NotificationTarget;
 use Illuminate\Http\Request;
 
@@ -23,19 +22,13 @@ class NotificationTargetController extends Controller
 
     public function store(NotificationTargetStoreRequest $request)
     {
-        // Validasi data request untuk NotificationTarget
         $validatedData = $request->validated();
-
-        // Buat instance NotificationTarget dan set data dari request
-        $targets = new NotificationTarget($validatedData);
-
-        // Simpan NotificationTarget
-        $targets->save();
+        $target = new NotificationTarget($validatedData);
+        $target->save();
 
         notify()->success('Notification Target created successfully!', 'Success');
         return redirect()->route('notification-targets.index');
     }
-
 
     public function edit(NotificationTarget $target)
     {
@@ -44,20 +37,16 @@ class NotificationTargetController extends Controller
 
     public function update(NotificationTargetUpdateRequest $request, NotificationTarget $target)
     {
-        // Validasi data request untuk NotificationTarget
         $validatedData = $request->validated();
-
-        // Update data NotificationTarget
         $target->update($validatedData);
 
         notify()->success('Notification Target updated successfully!', 'Success');
         return redirect()->route('notification-targets.index');
     }
 
-    public function destroy(NotificationTarget $target)
+    public function destroy($target)
     {
-        // Hapus NotificationTarget
-        $target->delete();
+        NotificationTarget::where('id', $target)->delete();
 
         notify()->success('Notification Target deleted successfully!', 'Success');
         return redirect()->route('notification-targets.index');

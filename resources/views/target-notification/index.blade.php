@@ -29,14 +29,12 @@
                                 <td>{{ $item->phone }}</td>
                                 <td>{{ $item->destination }}</td>
                                 <td>
-                                    <form action="{{ route('notification-targets.destroy', $item->id) }}" method="POST"
-                                        style="display: inline-block">
+                                    <form class="d-inline-block"
+                                        onsubmit="return confirm('Are you sure you want to delete this item?')"
+                                        action="{{ route('notification-targets.destroy', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Are you sure you want to delete this item?');">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>
